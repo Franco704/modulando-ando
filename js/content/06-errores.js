@@ -239,5 +239,54 @@
         { t: 'text', q: '¿Qué relación hay entre la distancia mínima de un código y los errores que detecta y corrige?', k: [['h - 1', 'h-1', 'd = h', 'distancia menos uno', 'h−1'], ['(h - 1)/2', '(h-1)/2', '2c + 1', '2c+1', 'mitad'], ['detecta', 'detectar'], ['corrige', 'corregir']], need: 3, e: '<p>Con distancia mínima H se detectan D = H − 1 errores y se corrigen C = (H − 1)/2 (H ≥ 2C + 1). En general H − 1 = D + C con D ≥ C.</p>' },
       ],
     },
+
+    {
+      id: 'errores-afondo',
+      module: 'u6',
+      title: 'A fondo: detectar o corregir, cuánta redundancia y qué código',
+      keywords: 'detección corrección redundancia paridad bit de paridad número impar de errores CRC división polinomial ráfagas Hamming distancia mínima esferas H ≥ 2C + 1 H − 1 = D + C códigos de bloque código de repetición FEC ARQ Hamming (7,4) eficiencia',
+      tldr: 'Detectar es saber <strong>que</strong> hubo error; corregir es saber <strong>dónde</strong> y arreglarlo sin retransmitir, y por eso cuesta <mark>más bits de redundancia</mark>. La paridad detecta solo un número <strong>impar</strong> de errores; el CRC <strong>detecta</strong> (no corrige) y es el mejor para ráfagas; Hamming corrige 1 bit. La capacidad la fija la distancia mínima: <strong>H ≥ 2C + 1</strong>, y en general <strong>H − 1 = D + C</strong> con D ≥ C.',
+      goals: ['Diferenciar detección, corrección, ARQ y FEC.', 'Usar la distancia mínima para decir cuántos errores se detectan y corrigen.', 'Ubicar paridad, CRC, Hamming y repetición según lo que hacen.', 'Resolver los V o F de errores del 2do parcial y del final.'],
+      body: `
+        <h2>Cuatro ideas que la cátedra mezcla a propósito</h2>
+        ${table(['Concepto', 'Qué hace', 'Ojo con'], [
+          ['<strong>Detección</strong>', 'Identifica si el mensaje se alteró (paridad, CRC)', 'No dice qué bit falló'],
+          ['<strong>Corrección</strong>', 'Reconstruye el mensaje original sin pedir retransmisión', 'Necesita más redundancia que detectar'],
+          ['<strong>ARQ</strong>', 'Detecta y pide retransmisión', 'Depende de un método de detección (CRC); no es independiente de él'],
+          ['<strong>FEC</strong>', 'Corrige en el receptor, “hacia adelante”', 'No retransmite: eso es ARQ'],
+        ])}
+        <p>Monitorear lo recibido y determinar que hubo un error es <strong>detección</strong>; el <strong>control de errores</strong> es más amplio: diseño, equipos y enlaces que bajen la tasa de errores, más las técnicas para detectarlos y corregirlos. Más bits de redundancia dan más protección pero bajan la eficiencia. Los errores en <strong>ráfaga</strong> son los más frecuentes y difíciles; los causa sobre todo el ruido impulsivo. Un error aislado aparece con ruido blanco que confunde al receptor en un bit.</p>
+        <h2>Distancia mínima y capacidad</h2>
+        ${eq('Detectar D errores: H ≥ D + 1 &nbsp;&nbsp; Corregir C errores: H ≥ 2C + 1 &nbsp;&nbsp; Ambos: H − 1 = D + C (D ≥ C)', 'Distancia mínima H de un código')}
+        <p>Geométricamente: alrededor de cada palabra válida se dibuja una “esfera” de radio C; si las esferas no se solapan, cualquier palabra con hasta C errores cae en la esfera de la correcta. Por eso hace falta H = 2C + 1, no H = C + 1. Si dos palabras están a distancia d, hacen falta <strong>d</strong> errores (no d − 1) para convertir una en la otra.</p>
+        ${table(['H', 'Detecta', 'Corrige', 'Ejemplo'], [['2', '1', '0', 'paridad simple'], ['3', '2 (o 1 y corrige 1)', '1', 'Hamming, repetición triple'], ['4', '3 (o 2 y corrige 1)', '1', 'Hamming extendido'], ['5', '4', '2', 'repetición ×5']])}
+        ${note('Cuestionario de la Unidad 6: un conjunto de palabras A = 0000111, B = 0001110, C = 0011100, D = 0111000 tiene distancia mínima 2 (A-B difieren en 2 bits): detecta 1 error y no corrige. Una distancia de 4 permite detectar 2 y corregir 1.', 'exam')}
+        <h2>Cada código en su lugar</h2>
+        ${table(['Código', 'Qué hace', 'Detalle'], [
+          ['Paridad (VRC)', 'Detecta un número <strong>impar</strong> de errores', 'Con un número par el bit de paridad no cambia y el error pasa desapercibido'],
+          ['CRC', 'Detecta (no corrige); excelente para <strong>ráfagas</strong>', 'División polinómica módulo 2 (operaciones con polinomios)'],
+          ['Hamming', 'Corrige 1 bit y detecta (H = 3); hasta 2 errores sin corregir', 'Bits de paridad en las posiciones potencia de 2 (1, 2, 4, 8, …); cada uno cubre un conjunto de posiciones. Un error en un bit de paridad también se detecta y se corrige'],
+          ['Hamming (7,4)', '7 bits: 4 de datos y 3 de paridad', 'Corrige 1 error; detecta 2 si no se usa para corregir'],
+          ['Repetición', 'Corrige por mayoría', '111 → si llega 101 o 110 se decide 1'],
+        ])}
+        <p>Los códigos de bloque (Hamming) codifican y decodifican bloque a bloque, independientemente del resto del mensaje. Con p bits de paridad, Hamming protege como máximo n = 2<sup>p</sup> − p − 1 bits de datos: con p = 4, n = 11 (como máximo, no como mínimo y no 7).</p>
+        ${note('“Los códigos de detección son más eficientes en ancho de banda que los de corrección porque requieren menos redundancia” es verdadero. “El CRC es un método de corrección” es falso: el CRC detecta.', 'exam')}`,
+      quiz: [
+        { q: 'El bit de paridad detecta…', o: ['cualquier error', 'un número impar de errores', 'un número par de errores', 'ráfagas largas'], a: 1, e: 'Con dos errores la paridad no cambia.' },
+        { q: 'Para corregir C errores hace falta una distancia mínima…', o: ['C + 1', '2C', '2C + 1', 'C − 1'], a: 2, e: 'Esferas de radio C sin solaparse.' },
+        { q: 'El CRC es un método de…', o: ['corrección de errores', 'detección de errores, muy bueno para ráfagas', 'compresión', 'modulación'], a: 1, e: 'Se usa con ARQ.' },
+        { q: 'Con p = 4 bits de paridad, Hamming protege como máximo…', o: ['7 bits de datos', '11 bits de datos', '15 bits de datos', '4 bits de datos'], a: 1, e: '2⁴ ≥ n + 4 + 1 → n ≤ 11. Cuestionario de la Unidad 6.' },
+        { q: 'FEC significa que el receptor…', o: ['pide retransmisión', 'corrige sin retransmisión', 'descarta la trama', 'solo detecta'], a: 1, e: 'Forward Error Correction.' },
+        { q: 'ARQ es…', o: ['independiente de la paridad o el CRC', 'un método que depende de la detección (por ejemplo CRC) y retransmite', 'un código corrector', 'una modulación'], a: 1, e: 'Cuestionario de la Unidad 6.' },
+        { q: 'Un código con distancia mínima 4 puede…', o: ['corregir 2', 'detectar 2 y corregir 1', 'detectar 4', 'nada'], a: 1, e: 'H − 1 = 3 = D + C con D = 2, C = 1.' },
+      ],
+      open: [
+        { t: 'num', q: '¿Cuántos errores puede corregir un código con distancia mínima 7?', a: 3, e: '<p>C = (7 − 1)/2 = 3.</p>' },
+        { t: 'num', q: '¿Cuántos bits de datos protege como máximo un Hamming con 5 bits de paridad?', a: 26, u: 'bits', e: '<p>n = 2⁵ − 5 − 1 = 26.</p>' },
+        { t: 'text', q: '¿Por qué corregir cuesta más redundancia que detectar?', k: [['distancia'], ['posicion', 'donde', 'cual bit', 'ubicar'], ['bits', 'redundancia']], need: 2, e: '<p>Para detectar alcanza con saber que la palabra no es válida (H ≥ D + 1); para corregir hay que saber cuál bit falló, lo que exige que la palabra recibida siga más cerca de la original que de cualquier otra (H ≥ 2C + 1): más distancia, más bits de redundancia.</p>' },
+      ],
+      sources: [{ title: 'Redes de computadoras', ref: 'Tanenbaum y Wetherall, 5ª ed., sección 3.2', points: ['Distancia de Hamming: d + 1 para detectar d errores, 2d + 1 para corregirlos.', 'Códigos de Hamming, de repetición y CRC.'] },
+        { title: 'Cuestionario de la Unidad 6 y 2do parcial 2025', ref: 'Cátedra de Comunicación de Datos, UTN-FRT', points: ['Relación H − 1 = D + C, detección contra corrección, ARQ y FEC.'] }],
+    },
   );
 })();

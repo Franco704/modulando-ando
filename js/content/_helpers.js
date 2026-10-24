@@ -2,8 +2,8 @@
    Cada lección: { id, module, title, keywords, tldr, goals?, body, labs?, exercises?, quiz?, sources? }
    - body puede incluir lab(i) para ubicar el laboratorio i dentro de la teoría.
    - labs: [{ type, title, ...config }] (los tipos se registran en js/labs/*.js)
-   - exercises: { title, official? ('3.1' = TP 3, ejercicio 1), level (1-3), prompt, hints?, solution: { explain } }
-   - quiz: [{ q, o: [opciones], a: índice correcto, e: explicación }]
+   - exercises: { title, official? ('3.1' = TP 3, ejercicio 1), exam? (['2p-2025-t1#4'] = examen e ítem, ver parciales.js), level (1-3), prompt, hints?, solution: { explain } }
+   - quiz: [{ q, o: [opciones], a: índice correcto, e: explicación, exam? (como en exercises) }]
    - open: preguntas abiertas corregidas al instante (ver app.js, checkOpen):
        { t: 'num', q, a: número, u?: 'Mbps' (unidad en que se espera), tol?: 0.02 (relativa), e: desarrollo }
        { t: 'text', q, k: [['etiqueta', 'sinónimo', ...], ...] (conceptos que deben aparecer), need?: cuántos, e: respuesta modelo }
@@ -125,9 +125,10 @@
     { id: 'u6', unit: 'p2', tema: '6', tp: 6, title: 'Errores en la transmisión de datos', stop: 'CRC', blurb: 'BER, paridad VRC/LRC, CRC, ARQ, FEC, distancia y código de Hamming' },
     { id: 'u7', unit: 'p3', tema: '7', tp: 7, title: 'Técnicas de transmisión de la información', stop: 'NRZ', blurb: 'bits y baudios, serie y paralelo, sincrónica y asincrónica, códigos de línea' },
     { id: 'u8', unit: 'p3', tema: '8', tp: 8, title: 'Modulación y multiplexación', stop: 'QAM', blurb: 'ASK, FSK, PSK, QAM, constelaciones, PCM, FDM, TDM y jerarquías E1, PDH y SDH' },
-    { id: 'u9', unit: 'p3', tema: '9', tp: 9, title: 'Unidad 9', stop: 'U9', blurb: 'contenido pendiente de carga' },
+    { id: 'u9', unit: 'p3', tema: '9', tp: 9, title: 'Redes de acceso: módem, xDSL y fibra', stop: 'xDSL', blurb: 'POTS y PSTN, módem DTE/DCE, ADSL y DMT, DSLAM, VDSL2, FTTx y redes ópticas pasivas GPON' },
     { id: 'u10', unit: 'final', tema: '10', tp: 10, title: 'Unidad 10', stop: 'U10', blurb: 'contenido pendiente de carga (entra solo en el final)' },
   ];
 
-  window.GUIDE = { UNITS, MODULES, LESSONS: [], LABS: {}, h: { esc, table, note, lab, flow, def, fig, frac, eq, num, plot, chart } };
+  // EXAMS: parciales y finales reales (parciales.js)
+  window.GUIDE = { UNITS, MODULES, LESSONS: [], LABS: {}, EXAMS: [], h: { esc, table, note, lab, flow, def, fig, frac, eq, num, plot, chart } };
 })();

@@ -209,5 +209,53 @@
       ],
       sources: [{ title: 'Huffman en la guía de la cátedra', ref: 'Guía Unidad 4, ejemplo 16', points: ['Tabla con columnas de probabilidades reordenadas en cada paso.', 'Los bits se leen recorriendo el árbol hasta el símbolo original.'] }],
     },
+
+    {
+      id: 'informacion-afondo',
+      module: 'u4',
+      title: 'A fondo: codificación de fuente, códigos prefijo e información mutua',
+      keywords: 'teorema de codificación de fuente primer teorema de Shannon cota de Shannon longitud media L entropía H ≤ L código prefijo libre de prefijo instantáneo Kraft Huffman óptimo longitud variable longitud fija redundancia información mutua I(X;Y) entropía condicional simétrica fuente sin memoria entropía binaria',
+      tldr: 'Lo que el 2do parcial 2025 tomó en V o F además de lo básico. <strong>Primer teorema de Shannon</strong>: ningún código sin pérdida comprime por debajo de la entropía, <mark>H ≤ L̄</mark>. <strong>Huffman</strong> es un código de <strong>longitud variable</strong>, <strong>prefijo</strong> y óptimo. La <strong>información mutua</strong> I(X;Y) = H(X) − H(X|Y) mide cuánto se reduce la incertidumbre de una variable al conocer la otra, y es simétrica.',
+      goals: ['Enunciar el teorema de codificación de fuente y la cota H ≤ L̄.', 'Explicar qué es un código prefijo y por qué Huffman lo es.', 'Definir redundancia de un código y de un mensaje.', 'Definir información mutua y entropía binaria H(p).'],
+      body: `
+        <h2>Teorema de codificación de fuente</h2>
+        ${def('Primer teorema de Shannon', 'Para una fuente sin memoria de entropía H, la longitud promedio L̄ de cualquier código unívocamente decodificable cumple L̄ ≥ H, y existen códigos con L̄ tan cerca de H como se quiera (H ≤ L̄ &lt; H + 1 codificando símbolo a símbolo).', 'Shannon (1948); guía de la Unidad 4.')}
+        <p>La entropía es entonces el <strong>límite inferior</strong> de la longitud promedio (la “cota de Shannon”): es imposible comprimir sin pérdida por debajo de H. Decir que la entropía es el límite <strong>superior</strong> de la longitud promedio es falso.</p>
+        ${eq('η = H / L̄ ≤ 1 &nbsp;&nbsp; Redundancia del código = L̄ − H (o 1 − η)', 'Eficiencia y redundancia')}
+        <p>Redundancia cero significa que el código alcanzó el límite teórico (pasa cuando todas las probabilidades son potencias de 1/2). A nivel de mensaje, lo <strong>predecible</strong> es redundante y tiene poco contenido informativo; lo <strong>impredecible</strong> es entrópico. Un mensaje con alta predecibilidad es redundante; uno con <strong>baja</strong> predecibilidad es entrópico y tiene alto contenido informativo.</p>
+        <h2>Longitud fija contra longitud variable</h2>
+        ${table(['Código', 'Cómo asigna', 'Óptimo cuando…'], [
+          ['Longitud fija (ASCII, BCD)', 'Todos los símbolos con la misma cantidad de bits; no mira las probabilidades', 'los símbolos son equiprobables (y N es potencia de 2)'],
+          ['Longitud variable (Huffman, Shannon-Fano)', 'Códigos <strong>cortos</strong> a los símbolos <strong>probables</strong> y largos a los improbables', 'siempre que las probabilidades sean distintas'],
+        ])}
+        <p>Huffman es de longitud <strong>variable</strong>, no fija; un código óptimo <strong>no</strong> tiene la misma longitud para todos los símbolos (salvo en el caso equiprobable).</p>
+        <h2>Códigos prefijo</h2>
+        ${def('Código prefijo (instantáneo)', 'Ninguna palabra código es el prefijo (el comienzo) de otra. Así el receptor reconoce cada palabra apenas termina, sin ambigüedad y sin separadores.', 'Guía de la Unidad 4.')}
+        <p>Ejemplo: {0, 10, 110, 111} es prefijo; {0, 01, 11} no lo es (0 es el comienzo de 01). Huffman siempre da un código prefijo, porque cada símbolo es una <strong>hoja</strong> del árbol. Un código prefijo existe con longitudes ℓᵢ si y solo si se cumple la desigualdad de Kraft: Σ 2<sup>−ℓᵢ</sup> ≤ 1.</p>
+        <h2>Entropía binaria</h2>
+        ${eq('H(p) = −[p·log₂p + (1 − p)·log₂(1 − p)]', 'Fuente de dos símbolos con probabilidades p y 1 − p')}
+        <p>Es máxima (1 bit) en <strong>p = 0,5</strong> y vale 0 en p = 0 o p = 1. En general, con N símbolos equiprobables H = log₂N es máxima: cuando todos son igualmente probables, <strong>todos</strong> aportan la misma información y la incertidumbre es la mayor posible. En una fuente <strong>sin memoria</strong> cada símbolo es independiente de los anteriores, y la entropía por símbolo es la de la fuente misma.</p>
+        <h2>Información mutua</h2>
+        ${eq('I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X) = I(Y;X) ≥ 0', 'Información mutua')}
+        <p>Mide cuánta información se obtiene sobre X al observar Y (cuánto se <strong>reduce</strong> la incertidumbre). Es <strong>simétrica</strong> y es una medida de <strong>dependencia</strong>: vale 0 si X e Y son independientes. En un canal, X es lo transmitido e Y lo recibido; la capacidad del canal es el máximo de I(X;Y), y por el segundo teorema de Shannon se puede transmitir con error arbitrariamente pequeño mientras R ≤ C.</p>
+        ${note('“La información mutua mide la reducción de la incertidumbre de una variable cuando <strong>no</strong> se conoce el valor de la otra, lo que la convierte en una medida de su independencia” es falsa dos veces: es al <strong>conocer</strong> la otra y mide <strong>dependencia</strong>.', 'exam')}
+        <h2>Sorpresa de un evento</h2>
+        ${eq('I(x) = log<sub>b</sub> (1/p(x)) = −log<sub>b</sub> p(x)', 'Información autocontenida')}
+        <p>Es <strong>inversamente</strong> proporcional a la probabilidad en el sentido de que crece cuando p baja, pero la relación es logarítmica: escribir I(x) = log<sub>b</sub> p(x) (sin el signo menos) es incorrecto, porque daría información negativa.</p>`,
+      quiz: [
+        { q: 'Según el teorema de codificación de fuente, la entropía es…', o: ['el límite superior de la longitud promedio', 'el límite inferior de la longitud promedio de cualquier código sin pérdida', 'igual a la longitud de cualquier código', 'independiente del código'], a: 1, e: 'H ≤ L̄.' },
+        { q: 'Huffman es un código…', o: ['de longitud fija', 'de longitud variable y prefijo', 'con pérdida', 'de corrección de errores'], a: 1, e: 'Cada símbolo es una hoja del árbol.' },
+        { q: '¿Cuál de estos códigos es prefijo?', o: ['{0, 01, 11}', '{1, 10, 100}', '{0, 10, 110, 111}', '{00, 0, 1}'], a: 2, e: 'Ninguna palabra empieza como otra.' },
+        { q: 'La información mutua I(X;Y)…', o: ['mide la independencia de X e Y', 'es la reducción de la incertidumbre de X al conocer Y y es simétrica', 'puede ser negativa', 'solo existe en canales sin ruido'], a: 1, e: 'H(X) − H(X|Y).' },
+        { q: 'La entropía de una fuente binaria es máxima cuando…', o: ['p = 0', 'p = 0,5', 'p = 1', 'p = 0,25'], a: 1, e: 'H(0,5) = 1 bit.' },
+        { q: 'Un mensaje con baja predecibilidad…', o: ['es redundante', 'es entrópico y tiene alto contenido informativo', 'tiene poca información', 'no se puede codificar'], a: 1, e: 'Lo impredecible informa.' },
+      ],
+      open: [
+        { t: 'num', q: 'Entropía de una fuente binaria con p = 0,1 (en bits por símbolo).', a: 0.469, tol: 0.01, u: 'bits', e: '<p>H = −(0,1·log₂0,1 + 0,9·log₂0,9) = 0,332 + 0,137 = <strong>0,469 bits</strong>.</p>' },
+        { t: 'text', q: '¿Qué es un código prefijo y por qué importa?', k: [['prefijo', 'comienzo', 'inicio'], ['ambig', 'univoc', 'instantane', 'decodific']], e: '<p>Uno en el que ninguna palabra código es el comienzo de otra: así se decodifica sin ambigüedad e instantáneamente, sin separadores. Huffman siempre lo es.</p>' },
+      ],
+      sources: [{ title: 'A Mathematical Theory of Communication', ref: 'C. E. Shannon, 1948', points: ['Teorema de codificación de fuente: H ≤ L̄.', 'Información mutua y capacidad del canal.'] },
+        { title: 'Segundo parcial 2025', ref: 'Cátedra de Comunicación de Datos, UTN-FRT', points: ['Afirmaciones de V o F sobre entropía, Huffman, códigos prefijo, redundancia e información mutua.'] }],
+    },
   );
 })();

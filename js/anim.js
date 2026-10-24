@@ -14,6 +14,7 @@
     u6: ['Datos', '+ redundancia', 'Canal', 'Detectar', 'Corregir'],
     u7: ['Bits', 'Símbolos', 'R = r·log₂N', 'Código de línea', 'Banda base'],
     u8: ['Bits', 'n = log₂M', 'Fase + amplitud', 'Portadora', 'Multiplexar'],
+    u9: ['Usuario', 'Splitter', 'Bucle de cobre / fibra', 'DSLAM / OLT', 'Internet'],
   };
 
   // trap = la confusión típica del tema
@@ -26,6 +27,7 @@
     u6: 'En el CRC se agregan <b>r ceros</b> (r = grado de G, una menos que sus bits). En Hamming de la cátedra las posiciones se numeran de <b>derecha a izquierda</b>.',
     u7: 'Bits por segundo y baudios coinciden solo con <b>2 niveles</b>: R = r·log₂N. Manchester tiene transición en la <b>mitad</b> de cada bit; el diferencial mira el <b>comienzo</b>.',
     u8: 'Baudios = bps / <b>log₂M</b>. QPSK y 4-ASK tienen la misma tasa de símbolos; en QAM, M ≤ fases × amplitudes. Nyquist del muestreo: <b>fs ≥ 2·f<sub>máx</sub></b>.',
+    u9: 'ADSL multiplexa voz y datos en <b>frecuencia</b> (el splitter los separa); el <b>DSLAM</b> está en la central. En GPON la bajada es <b>broadcast</b> y la subida <b>TDMA</b>; el splitter óptico es <b>pasivo</b>.',
   };
 
   // Un SVG de 150×120 por tema. Sin animación (reduced-motion) cada uno queda en un estado final legible.

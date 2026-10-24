@@ -285,5 +285,70 @@
         { t: 'text', q: 'Definí frecuencia de corte de un filtro.', k: [['ganancia', 'tension', 'amplitud', 'potencia'], ['0,707', '0.707', '3 db', '-3', 'mitad']], e: '<p>Es la frecuencia en la que la ganancia en tensión del filtro cae de 1 a 0,707 (−3 dB): la potencia de salida es la mitad.</p>' },
       ],
     },
+
+    {
+      id: 'espectros-afondo',
+      module: 'u2',
+      title: 'A fondo: qué espectro sale de cada señal',
+      keywords: 'análisis de Fourier serie compleja trigonométrica transformada espectro discreto continuo periódico aperiódico rayas 1/T envolvente sinc ancho de pulso p ancho de banda 1/p amplitudes negativas desfasaje 180 frecuencias negativas valor medio Ap/T',
+      tldr: 'Es el tema que más preguntas de V o F da en el 1er parcial y en el final. Regla de oro: <mark>periódico en un dominio ↔ discreto en el otro</mark>. Una señal periódica da rayas separadas <strong>1/T</strong>; un pulso aislado da un espectro <strong>continuo</strong> (transformada). En los dos casos el pulso rectangular de ancho p da una envolvente <strong>sinc</strong> cuyo primer cero está en <strong>1/p</strong>: achicar el pulso ensancha el espectro.',
+      goals: ['Decidir si un espectro sale de la serie o de la transformada de Fourier.', 'Leer de un espectro el período, la frecuencia fundamental, el ancho del pulso y la componente continua.', 'Distinguir la forma trigonométrica (solo frecuencias positivas) de la compleja (positivas y negativas).', 'Justificar las afirmaciones típicas de V o F de los parciales.'],
+      body: `
+        <h2>La tabla que resuelve casi todos los V o F</h2>
+        ${table(['Señal x(t)', 'Herramienta', 'Espectro X(f)'], [
+          ['Periódica (período T)', 'Serie de Fourier', '<strong>Discreto</strong> (rayas cada 1/T) y <strong>aperiódico</strong>'],
+          ['Aperiódica (pulso aislado)', 'Transformada de Fourier', '<strong>Continuo</strong> y aperiódico'],
+          ['Discreta en el tiempo (muestreada) y aperiódica', 'Transformada de tiempo discreto', 'Continuo y <strong>periódico</strong>'],
+          ['Discreta y periódica', 'Serie discreta (DFT)', 'Discreto y periódico'],
+        ])}
+        <p>Por eso: “un espectro discreto y aperiódico sale de una señal <strong>periódica</strong>” es <strong>verdadero</strong>; “sale de una señal aperiódica” es falso; “un espectro continuo y periódico sale de una señal aperiódica en el tiempo” es falso (hace falta que esté muestreada); “un espectro discreto y periódico sale de una señal periódica” es falso (hace falta que además sea discreta).</p>
+        <h2>Tren de pulsos: lo que se lee del espectro</h2>
+        ${eq('C<sub>n</sub> = (A·p/T)·sinc(n·p/T) &nbsp;&nbsp; rayas en n/T &nbsp;&nbsp; primer cero en f = 1/p &nbsp;&nbsp; C<sub>0</sub> = A·p/T', 'Serie compleja de un tren de pulsos de amplitud A, ancho p y período T')}
+        ${table(['Dato del espectro', 'Qué te da', 'Ejemplo (final 07/05/2019)'], [
+          ['Separación entre rayas', 'f₀ = 1/T (fundamental)', 'rayas cada 1 kHz → T = 1 ms'],
+          ['Primer cruce por cero', '1/p → ancho del pulso p', 'cero en 4 kHz → p = 0,25 ms'],
+          ['Altura de la raya en f = 0', 'Componente continua (valor medio) A·p/T', 'C₀ = 2,5 → A = 2,5 × T/p = 10'],
+          ['Rayas en frecuencias negativas', 'Es la serie <strong>compleja</strong>', 'aparecen −1, −2, … kHz'],
+          ['Cantidad de rayas antes del primer cero', 'T/p − 1', '4 − 1 = 3 rayas'],
+        ])}
+        <ul>
+          <li>Las rayas están separadas <strong>1/T</strong>, no 1/p ni 1/2T. Si T = 1 ms, separadas 1 kHz.</li>
+          <li>Las amplitudes siguen la envolvente <strong>sinc</strong> y, en general, <strong>disminuyen al aumentar</strong> el orden n (no al disminuirlo).</li>
+          <li>Las amplitudes dependen de T (por el factor p/T): si T crece con p fijo, las rayas se acercan y bajan.</li>
+          <li>Una amplitud <strong>negativa</strong> significa que esa armónica está desfasada <strong>180°</strong> (no 360°).</li>
+          <li>Con p = T/2 (onda cuadrada, ciclo de actividad 50 %) se anulan las armónicas pares; si la señal además es simétrica respecto del eje (valores ±A) el valor medio es cero y quedan solo armónicas <strong>impares</strong>.</li>
+        </ul>
+        <h2>Forma trigonométrica contra compleja</h2>
+        ${table(['', 'Trigonométrica', 'Compleja'], [
+          ['Qué suma', 'senos y cosenos (a<sub>n</sub>, b<sub>n</sub>)', 'fasores e<sup>j2πnf₀t</sup> (C<sub>n</sub>)'],
+          ['Frecuencias', 'solo <strong>positivas</strong>', 'positivas <strong>y negativas</strong> (simétricas)'],
+          ['Cantidad de términos', 'infinitos (en general)', 'infinitos'],
+          ['Coeficientes', 'reales', 'C<sub>n</sub> pueden ser reales o imaginarios (complejos)'],
+          ['Componente continua', 'a₀', 'C₀ (igual al valor medio)'],
+        ])}
+        ${note('Trampas de la cátedra: la serie compleja es una suma infinita de <strong>fasores</strong>, no de “senos y cosenos”; a la <strong>primera</strong> armónica (no a la segunda) se la llama fundamental; la transformada es una <strong>integral</strong> (no una suma de fasores) y en ella “desaparecen” las armónicas y aparece el ancho de banda.', 'warn')}
+        <h2>Transformada de un pulso: ancho y ancho de banda</h2>
+        ${eq('X(f) = A·p·sinc(f·p) &nbsp;&nbsp; B ≈ 1/p', 'Pulso rectangular aislado de ancho p')}
+        <p>Ancho de pulso y ancho de banda son <strong>inversos</strong>: un pulso de 1 µs ocupa ≈ 1 MHz y un ancho de banda de 1 MHz corresponde a un pulso de 1 µs. Si el pulso se angosta, el espectro se ensancha. Aumentar la amplitud A no cambia la forma del espectro (ni sus ceros): solo la escala y la energía.</p>
+        ${note('Lectura de enunciado: “si el ancho de banda B fuera de 1 µs, el ancho del pulso es de 1 MHz” tiene las unidades cruzadas. La cátedra lo marcó verdadero en un modelo de parcial (lee la relación inversa B = 1/p) y falso en el final del 03/09/2019. En el examen, justificá con B = 1/p y aclarando las unidades correctas: 1 MHz ↔ 1 µs.', 'exam')}
+        <h2>Ancho de banda absoluto y efectivo</h2>
+        <p><strong>Absoluto</strong>: diferencia entre la frecuencia más alta y la más baja de la señal compuesta [Hz]. <strong>Efectivo</strong>: la banda que contiene la <strong>mayor</strong> parte de la energía (no la menor) [Hz].</p>`,
+      quiz: [
+        { q: 'Un espectro discreto y aperiódico es el resultado del análisis de Fourier de una señal…', o: ['aperiódica en el tiempo', 'periódica en el tiempo', 'muestreada y aperiódica', 'aleatoria'], a: 1, e: 'Periódica ↔ discreta. Cuestionario de la Unidad 2.' },
+        { q: 'Un espectro con forma de sinc continua, con ceros en múltiplos de 1/a, es resultado de…', o: ['la serie de Fourier compleja', 'la transformada de Fourier de un pulso de ancho a', 'la serie trigonométrica', 'un tren de pulsos de período a'], a: 1, e: 'Continuo → señal aperiódica → transformada. Final del 27/06/2019.' },
+        { q: 'Un espectro tiene rayas cada 1 kHz y su primer cero en 4 kHz. El pulso dura…', o: ['1 ms', '0,25 ms', '4 ms', '0,5 ms'], a: 1, e: 'Primer cero en 1/p → p = 1/4000 s. El período es 1 ms.' },
+        { q: 'Si el ancho del pulso disminuye, el ancho de banda espectral…', o: ['disminuye', 'aumenta', 'no cambia', 'se hace cero'], a: 1, e: 'B ≈ 1/p.' },
+        { q: 'En la serie trigonométrica de Fourier…', o: ['hay armónicas en frecuencias negativas', 'hay armónicas solo en frecuencias positivas', 'las rayas están separadas 1/2T', 'la fundamental es la segunda armónica'], a: 1, e: 'Las negativas aparecen en la forma compleja.' },
+        { q: 'Una amplitud negativa en el espectro de la serie compleja indica…', o: ['un error de cálculo', 'un desfasaje de 180°', 'un desfasaje de 360°', 'una frecuencia negativa'], a: 1, e: '−|C| = |C|·e^{jπ}.' },
+        { q: 'Aumentar la amplitud A de un pulso…', o: ['corre los ceros del espectro', 'no cambia la forma del espectro, sí su energía', 'angosta el espectro', 'ensancha el espectro'], a: 1, e: 'Los ceros dependen solo de p.' },
+      ],
+      open: [
+        { t: 'num', q: 'El espectro de un tren de pulsos tiene rayas cada 1 kHz, el primer cero en 4 kHz y C₀ = 2,5. ¿Cuál es la amplitud A del pulso?', a: 10, e: '<p>T = 1 ms, p = 0,25 ms. C₀ = A·p/T → A = 2,5 × 4 = <strong>10</strong>.</p>' },
+        { t: 'num', q: 'Si el espectro de un pulso aislado tiene un ancho de banda de 1 MHz, ¿cuánto dura el pulso, en µs?', a: 1, u: 'µs', e: '<p>p = 1/B = 1 µs.</p>' },
+        { t: 'text', q: '¿Por qué un espectro continuo indica que la señal es aperiódica?', k: [['periodic', 'periodo'], ['discreto', 'rayas', 'armonicas'], ['transformada', 'continuo', 'integral']], need: 2, e: '<p>Una señal periódica solo tiene energía en múltiplos de 1/T: su espectro son rayas (discreto). Cuando T → ∞ (señal aperiódica) las rayas se juntan y el espectro se vuelve continuo: es la transformada de Fourier.</p>' },
+      ],
+      sources: [{ title: 'Apuntes 2.3 a 2.6 y parciales', ref: 'Cátedra de Comunicación de Datos, UTN-FRT', points: ['Tren de pulsos: n = T/p indica el primer cruce por cero; C₀ = Ap/T.', 'Transformada: desaparecen las armónicas y aparece el ancho de banda; B = 1/p.'] },
+        { title: 'Comunicaciones y redes de computadores', ref: 'Stallings, 7ª ed., capítulo 3 y apéndice de Fourier', points: ['Dominio del tiempo y de la frecuencia; ancho de banda absoluto y efectivo.'] }],
+    },
   );
 })();
