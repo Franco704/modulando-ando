@@ -23,6 +23,7 @@
     ['Diseñando Ando', 'Diseño de Sistemas de Información (UML, GRASP, GoF)', 'disenando-ando'],
     ['Iterando Ando', 'Matemática Superior (Laplace, métodos numéricos, Fourier)', 'iterando-ando'],
     ['Economizar', 'Economía (micro y macro con gráficas)', 'economizar'],
+    ['Probando Ando', 'Probabilidad y Estadística (Bayes, distribuciones, intervalos, tests)', 'probando-ando'],
   ];
 
   // ---------- Almacenamiento (puede fallar en modo privado) ----------
