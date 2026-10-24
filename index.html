@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modulando Ando</title>
+  <meta name="description" content="Guía de estudio de Comunicación de Datos (UTN-FRT): teoría, laboratorios interactivos, preguntas abiertas corregidas al instante y los TP resueltos, separada por parcial y final." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/anim.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M1 8Q3 1 5 8T9 8T13 8T15 8%22 fill=%22none%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke=%22%231f5fc4%22/%3E%3C/svg%3E" />
+  <script>
+    // Aplicar el tema guardado antes de pintar, para evitar parpadeo
+    try { const t = localStorage.getItem('ma-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+    </button>
+    <a class="brand" href="#/"><span class="brand-dot" aria-hidden="true"></span>Modulando Ando</a>
+    <nav class="top-links" aria-label="Práctica">
+      <a href="#/abiertas">Abiertas</a>
+      <a href="#/graficas">Gráficas</a>
+      <a href="#/formulas">Fórmulas</a>
+      <a href="#/repaso" id="reviewLink">Repasar <span class="badge" id="reviewCount" hidden></span></a>
+      <a href="#/simulacro">Simulacro</a>
+    </nav>
+    <div class="progress" aria-label="Progreso del curso">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">0 de 0</span>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="Cambiar entre tema claro y oscuro">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    </button>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Índice del curso">
+      <label class="search">
+        <span class="sr-only">Buscar tema</span>
+        <input type="search" id="search" placeholder="Buscar tema (ej: Hamming, dBm, QPSK)" autocomplete="off" />
+      </label>
+      <div id="toc"></div>
+    </nav>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <main id="main" tabindex="-1"></main>
+    <aside class="rail" id="rail" aria-label="En esta página"></aside>
+  </div>
+
+  <script src="js/content/_helpers.js"></script>
+  <script src="js/labs/core.js"></script>
+  <script src="js/labs/cx.js"></script>
+  <script src="js/labs/coms.js"></script>
+  <script src="js/content/01-sistemas.js"></script>
+  <script src="js/content/02-senales.js"></script>
+  <script src="js/content/03-ruido.js"></script>
+  <script src="js/content/04-informacion.js"></script>
+  <script src="js/content/05-canales.js"></script>
+  <script src="js/content/06-errores.js"></script>
+  <script src="js/content/07-transmision.js"></script>
+  <script src="js/content/08-modulacion.js"></script>
+  <script src="js/content/formulas.js"></script>
+  <script src="js/anim.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
