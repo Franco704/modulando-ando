@@ -4,19 +4,19 @@ Guía de estudio de **Comunicación de Datos 2026 (UTN-FRT, Ingeniería en Siste
 
 - **Primer parcial** (azul): Unidad 1 Sistemas de comunicación, Unidad 2 Análisis de señales, Unidad 3 Atenuación, distorsión y ruido.
 - **Segundo parcial** (violeta): Unidad 4 Teoría de la información, Unidad 5 Canales de comunicaciones, Unidad 6 Errores en la transmisión.
-- **Tercer parcial** (verde azulado): Unidad 7 Técnicas de transmisión, Unidad 8 Modulación y multiplexación, Unidad 9 Redes de acceso (módem, xDSL y fibra).
+- **Tercer parcial** (verde azulado): Unidad 7 Técnicas de transmisión, Unidad 8 Modulación y multiplexación, Unidad 9 Equipos de comunicación de datos (módem, xDSL y fibra).
 - **Final** (ámbar): todas las unidades más la Unidad 10 (pendiente).
 
 Contenido:
 
 - **Parciales y finales resueltos** (`#/parciales`): 17 exámenes reales (parciales 2023 a 2025 en sus distintos temas y seis finales de 2019), 73 ítems resueltos con su teoría, ranking de lo que más se repite y qué unidades pesan más. Cada afirmación de verdadero o falso queda además como pregunta en su lección, marcada “tomada en parcial”.
 - **Teoría a fondo** para lo que toman los parciales y no estaba en las guías: qué espectro sale de cada señal (serie, transformada, sinc, 1/T y 1/p), teorema de codificación de fuente, códigos prefijo e información mutua, y detección contra corrección (distancia mínima, FEC, ARQ, repetición).
-- **Unidad 9** cargada desde el TP 9 y su cuestionario: POTS y PSTN, módem DTE/DCE, ADSL, DMT, DSLAM, VDSL2, FTTx y redes ópticas pasivas (GPON).
+- **Unidad 9** completa, desde el apunte de la cátedra, sus cinco lecturas (banda ancha, ADSL, redes ópticas, MODEM y redes PON), el TP 9 y su cuestionario: módem DTE/DCE y normas V (FSK a TCM, V.90/V.92), interfaz RS-232/V.24 y módem nulo, xDSL, ADSL, splitter, DSLAM, VDSL/VDSL2, DMT con bitswapping y Reed-Solomon, FTTx, PON y presupuesto óptico, y las tecnologías PON de APON a NG-PON2 con la capa física de GPON.
 - Preguntas de los cuestionarios del campus de las unidades 1 a 8.
-- 44 lecciones con la teoría de la cátedra, glifo animado por unidad y pantalla de entrada con el error típico del parcial.
-- 40 laboratorios interactivos: senoidal y espectro, señal compuesta, sumas de Fourier, tren de pulsos (sinc), filtros, presupuesto de enlace WiFi, H(p), Huffman con árbol, muestreo y aliasing, Shannon, paridad VRC/LRC, CRC paso a paso, Hamming de la cátedra, ARQ, códigos de línea (NRZ a HDB3), modulaciones con constelación, QAM con ruido, PCM, FDM, TDM, topologías y AM/FM/PM.
-- 517 preguntas de opción múltiple y 137 **preguntas abiertas corregidas al instante**: cálculos con tolerancia y unidades (“133 Mbps”, “−100,8 dBm”, “10^-4”), teóricas por conceptos clave (con respuesta modelo y la opción de marcarla como correcta) y cadenas de bits exactas (CRC, Hamming, paridad).
-- 119 ejercicios resueltos: los de los TP 1 a 9 y los de los parciales. Los números de CRC, Hamming, Huffman, ruido, enlaces, TDM y códigos de línea se calculan en la página con el mismo código que los laboratorios.
+- 48 lecciones con la teoría de la cátedra, glifo animado por unidad y pantalla de entrada con el error típico del parcial.
+- 49 laboratorios interactivos: senoidal y espectro, señal compuesta, sumas de Fourier, tren de pulsos (sinc), filtros, presupuesto de enlace WiFi, H(p), Huffman con árbol, muestreo y aliasing, Shannon, paridad VRC/LRC, CRC paso a paso, Hamming de la cátedra, ARQ, códigos de línea (NRZ a HDB3), modulaciones con constelación, QAM con ruido, PCM, FDM, TDM, topologías y AM/FM/PM.
+- 571 preguntas de opción múltiple y 156 **preguntas abiertas corregidas al instante**: cálculos con tolerancia y unidades (“133 Mbps”, “−100,8 dBm”, “10^-4”), teóricas por conceptos clave (con respuesta modelo y la opción de marcarla como correcta) y cadenas de bits exactas (CRC, Hamming, paridad).
+- 135 ejercicios resueltos: los de los TP 1 a 9 y los de los parciales. Los números de CRC, Hamming, Huffman, ruido, enlaces, TDM y códigos de línea se calculan en la página con el mismo código que los laboratorios.
 - Cuestionario por módulo, simulacro de cada parcial y del final (opción múltiple + abiertas), repaso de lo fallado, taller de gráficas y hoja de fórmulas.
 
 Sitio en GitHub Pages: [franco704.github.io/modulando-ando](https://franco704.github.io/modulando-ando/)

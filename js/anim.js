@@ -14,7 +14,7 @@
     u6: ['Datos', '+ redundancia', 'Canal', 'Detectar', 'Corregir'],
     u7: ['Bits', 'Símbolos', 'R = r·log₂N', 'Código de línea', 'Banda base'],
     u8: ['Bits', 'n = log₂M', 'Fase + amplitud', 'Portadora', 'Multiplexar'],
-    u9: ['Usuario', 'Splitter', 'Bucle de cobre / fibra', 'DSLAM / OLT', 'Internet'],
+    u9: ['DTE', 'Módem (DCE)', 'Splitter + par de cobre', 'DSLAM / OLT', 'Fibra · Internet'],
   };
 
   // trap = la confusión típica del tema
@@ -27,7 +27,7 @@
     u6: 'En el CRC se agregan <b>r ceros</b> (r = grado de G, una menos que sus bits). En Hamming de la cátedra las posiciones se numeran de <b>derecha a izquierda</b>.',
     u7: 'Bits por segundo y baudios coinciden solo con <b>2 niveles</b>: R = r·log₂N. Manchester tiene transición en la <b>mitad</b> de cada bit; el diferencial mira el <b>comienzo</b>.',
     u8: 'Baudios = bps / <b>log₂M</b>. QPSK y 4-ASK tienen la misma tasa de símbolos; en QAM, M ≤ fases × amplitudes. Nyquist del muestreo: <b>fs ≥ 2·f<sub>máx</sub></b>.',
-    u9: 'ADSL multiplexa voz y datos en <b>frecuencia</b> (el splitter los separa); el <b>DSLAM</b> está en la central. En GPON la bajada es <b>broadcast</b> y la subida <b>TDMA</b>; el splitter óptico es <b>pasivo</b>.',
+    u9: 'ADSL multiplexa voz y datos en <b>frecuencia</b> (el splitter los separa); el <b>DSLAM</b> está en la central. En DMT lo espaciado en forma constante son las <b>frecuencias</b> y en cada una se mide la <b>SNR</b>. En GPON la bajada es <b>broadcast</b> y la subida <b>TDMA</b>; el splitter óptico es <b>pasivo</b>.',
   };
 
   // Un SVG de 150×120 por tema. Sin animación (reduced-motion) cada uno queda en un estado final legible.
@@ -49,6 +49,7 @@
     u7: `<path d="M8 82H142" class="gx-line"/><path d="M10 40H28V84H46V84H64V40H82V84H100V40H118V40H140" class="gx-dem gx-draw" pathLength="1"/>${['1', '0', '0', '1', '0', '1', '1'].map((b, i) => `<text x="${19 + i * 18}" y="28" class="gx-t gx-ink">${b}</text>`).join('')}`,
     u8: `<path d="M8 60H142" class="gx-line"/><path d="${sine(10, 140, 60, 26, 6, 120)}" class="gx-pmg-s gx-draw" pathLength="1"/><path d="M75 8V112" class="gx-line gx-dash"/>
       ${[[45, 135], [-45, 45], [135, -135], [-135, -45]].map(([a], i) => `<circle cx="${75 + 34 * Math.cos((a * Math.PI) / 180)}" cy="${60 - 34 * Math.sin((a * Math.PI) / 180)}" r="5" class="gx-eqf gx-pop" ${d(0.6 + i * 0.3)}/>`).join('')}`,
+    u9: `${AX}${[6, 9, 11, 12, 12, 11, 4, 3, 9, 8, 7, 5, 4].map((b, i) => `<rect x="${17 + i * 9.6}" y="${106 - b * 6.5}" width="7" height="${b * 6.5}" rx="1.5" class="gx-soft gx-grow-y" ${d((i * 0.12).toFixed(2))}/>`).join('')}<text x="80" y="18" class="gx-t gx-tc">bits por tono</text>`,
   };
   const glyph = (modId) => (GLYPHS[modId] ? `<svg viewBox="0 0 150 120" focusable="false">${GLYPHS[modId]}</svg>` : '');
 

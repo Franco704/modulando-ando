@@ -43,5 +43,11 @@
     { m: 'u8', n: 'FDM', f: 'B = Σ B<sub>canal</sub> + (N − 1)·B<sub>guarda</sub>' },
     { m: 'u8', n: 'TDM síncrono', f: 'trama = N·b + s · tramas/s = R<sub>f</sub>/b · R<sub>sal</sub> = trama × tramas/s' },
     { m: 'u8', n: 'E1 y T1', f: 'E1 = 256 bits × 8000 = 2,048 Mbps · T1 = 193 × 8000 = 1,544 Mbps', d: 'SDH: STM-1 = 155,52 Mbps.' },
+    { m: 'u9', n: 'Velocidad del módem', f: 'R = B<sub>M-ario</sub>·log₂M', d: 'Banda de datos 600-3000 Hz: dúplex B = 1200 Hz por sentido, semidúplex B = 2400 Hz.' },
+    { m: 'u9', n: 'ADSL (FDM)', f: 'voz 0-4 kHz · subida ≈ 26-138 kHz · bajada 138-1104 kHz' },
+    { m: 'u9', n: 'DMT', f: 'R = canales × 4 kHz × bits · 256 canales de 4,3125 kHz', d: '0 voz, 1-5 guarda, 6-30 subida (24 + control), 31-255 bajada (224 + control): 1,44 y 13,44 Mbps teóricos.' },
+    { m: 'u9', n: 'Bits por subportadora', f: 'M = √(1 + SNR) · SNR ≈ 9,8 + 3n dB (BER 10⁻⁷)', d: 'De 4-QAM (2 bits) a 16384-QAM (14 bits).' },
+    { m: 'u9', n: 'Reed-Solomon', f: 'd = n − k + 1 · c = (d − 1)/2 · overhead = (n − k)/n', d: 'RS(255,239): corrige 8 bytes, 6,3 %. ADSL: 238 × 8 × 4000 = 7,616 Mbps.' },
+    { m: 'u9', n: 'Presupuesto PON', f: 'splitter 1:N ≈ 10·log N dB · total = splitter + α·L + empalmes + conectores', d: 'Clase B 10-25 dB, B+ 28 dB, C 15-30 dB.' },
   ];
 })();
