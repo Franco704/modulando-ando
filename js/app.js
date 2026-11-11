@@ -124,6 +124,7 @@
     else if (id === 'graficas') renderGraphs();
     else if (id === 'formulas') renderFormulas();
     else if (id === 'parciales') renderParciales();
+    else if (id === 'videos' || id.startsWith('videos/')) renderVideos(LESSONS.findIndex((l) => l.id === id.slice(7)));
     else renderHome();
     renderToc($('#search').value);   // abre el módulo de la página actual
     closeMenu();
@@ -210,6 +211,7 @@
           <div class="hero-actions">
             <a class="btn primary" href="#/${resume.id}">${done.size ? 'Seguir con' : 'Empezar con'} “${resume.title}”</a>
             <a class="btn" href="#/parciales">Parciales resueltos</a>
+            <a class="btn" href="#/videos">Videos de resumen</a>
             <a class="btn" href="#/abiertas">Preguntas abiertas</a>
             <a class="btn" href="#/graficas">Taller de gráficas</a>
             <a class="btn" href="#/formulas">Fórmulas</a>
@@ -314,6 +316,9 @@
         <p class="crumb"><span class="unit-tag sm">${unitOf(mod.unit).title}</span> <a href="#/${lessonsOf(mod.id)[0].id}">Unidad ${mod.tema}: ${mod.title}</a>, lección ${idx + 1} de ${LESSONS.length}</p>
         <h1>${l.title}</h1>
         <p class="tldr">${l.tldr}</p>
+        <details class="lesson-video"><summary>Ver el video resumen de esta lección</summary>
+          <video controls playsinline preload="none" src="videos/${l.id}.mp4"></video>
+          <a href="#/videos/${l.id}">Ver todos los videos de corrido desde acá →</a></details>
         ${l.goals ? `<div class="goals"><p>Al terminar vas a poder:</p><ul>${l.goals.map((g) => `<li>${g}</li>`).join('')}</ul></div>` : ''}
         <div class="body">${l.body}${rest}</div>
         ${quiz.length ? `<section class="check-sec" id="comprobar"><h2>Comprobá lo que entendiste</h2><p class="sec-lede">Elegí una respuesta: la corrección es inmediata. Lo que falles queda guardado para repasar.</p><div class="quiz-mount"></div></section>` : ''}
@@ -634,6 +639,39 @@
   }
 
   // ---------- Parciales reales: cada ítem con su resolución y lo que más se repite ----------
+  // Videos de resumen (#/videos o #/videos/<lección>): todos de corrido, agrupados por parcial, con salto a cada lección
+  function renderVideos(start) {
+    let cur = Math.max(start, 0);
+    document.title = `Videos de resumen, ${NAME}`;
+    const units = UNITS.filter((u) => !u.all && MODULES.some((m) => m.unit === u.id));
+    main.innerHTML = `
+      <article class="lesson videos">
+        <h1>Videos de resumen</h1>
+        <p class="tldr">Un video corto por lección, separados por parcial. Se reproducen de corrido: cuando termina uno arranca el siguiente. Si algo no te cierra, abrí la lección de la que habla.</p>
+        <div class="vid-player">
+          <video controls playsinline preload="metadata"></video>
+          <p class="vid-now"><span></span><a href="#/">Ir a la lección →</a></p>
+        </div>
+        <label class="vid-auto"><input type="checkbox" checked /> Reproducir el siguiente automáticamente</label>
+        ${units.map((u) => `<section data-u="${u.id}"><h2><span class="unit-tag">${u.title}</span> ${u.name}</h2>
+          <ol class="vid-list">${LESSONS.map((l, i) => ({ l, i })).filter(({ l }) => modOf(l.module).unit === u.id).map(({ l, i }) => `<li><button type="button" data-i="${i}"><span class="n">${i + 1}</span>${l.title}</button><a href="#/${l.id}">lección</a></li>`).join('')}</ol></section>`).join('')}
+      </article>`;
+    const video = $('video', main);
+    const btns = [...main.querySelectorAll('.vid-list button')];
+    const play = (i, auto) => {
+      cur = i;
+      video.src = `videos/${LESSONS[i].id}.mp4`;
+      if (auto) video.play().catch(() => {});
+      document.body.dataset.unit = modOf(LESSONS[i].module).unit;   // el reproductor toma el color del parcial
+      $('.vid-now span', main).textContent = `${i + 1}. ${LESSONS[i].title}`;
+      $('.vid-now a', main).href = `#/${LESSONS[i].id}`;
+      btns.forEach((b) => b.toggleAttribute('aria-current', +b.dataset.i === i));
+    };
+    btns.forEach((b) => b.addEventListener('click', () => { play(+b.dataset.i, true); video.scrollIntoView({ block: 'nearest' }); }));
+    video.addEventListener('ended', () => { if ($('.vid-auto input', main).checked && cur < LESSONS.length - 1) play(cur + 1, true); });
+    play(cur, false);
+  }
+
   function renderParciales() {
     document.title = `Parciales resueltos, ${NAME}`;
     const withExam = EXS.filter(({ ex }) => ex.exam);

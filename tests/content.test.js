@@ -10,6 +10,7 @@ const ids = new Set();
 for (const l of LESSONS) {
   assert(!ids.has(l.id), `id repetido ${l.id}`); ids.add(l.id);
   assert(MODULES.some((m) => m.id === l.module), `módulo inexistente en ${l.id}`);
+  assert(fs.existsSync(path.join(__dirname, `../videos/${l.id}.mp4`)), `falta el video videos/${l.id}.mp4`);
   for (const c of l.labs || []) assert(LABS[c.type], `lab ${c.type} en ${l.id}`);
   for (const q of l.quiz || []) assert(q.a >= 0 && q.a < q.o.length, `respuesta fuera de rango en ${l.id}: ${q.q}`);
   for (const q of l.open || []) {

@@ -860,3 +860,24 @@ span.neg { color: var(--err); font-weight: 600; } span.pos { color: var(--ok); f
 .exam-q > summary small { color: var(--muted); font-weight: 400; }
 .exam-q .exercise { margin-top: 10px; }
 .vf { font-weight: 700; } .vf.v { color: var(--ok); } .vf.f { color: var(--err); }
+
+/* ============ Videos de resumen ============ */
+.vid-player video, .lesson-video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); }
+.vid-player { position: sticky; top: calc(var(--top) + 8px); z-index: 1; background: var(--bg); padding-bottom: 4px; }
+.vid-now { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-family: var(--sans); font-weight: 700; margin: 10px 0; }
+.vid-auto { display: inline-flex; gap: 8px; align-items: center; font-family: var(--sans); font-size: .9rem; color: var(--muted); margin-bottom: 8px; }
+.videos section h2 { color: var(--u); }
+.vid-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.vid-list li { display: flex; align-items: center; gap: 8px; }
+.vid-list button {
+  flex: 1; min-width: 0; display: flex; gap: 10px; text-align: left; font: inherit; font-family: var(--sans); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--u); border-radius: 8px; padding: 8px 12px; cursor: pointer;
+}
+.vid-list button:hover { border-color: var(--u); }
+.vid-list button[aria-current] { background: var(--u-soft); color: var(--u); font-weight: 700; border-color: var(--u); }
+.vid-list .n { font-family: var(--mono); font-size: .78rem; color: var(--muted); align-self: center; min-width: 2ch; }
+.vid-list a { font-family: var(--sans); font-size: .9rem; }
+.lesson-video { margin: 0 0 32px; font-family: var(--sans); }
+.lesson-video summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+.lesson-video video { margin: 12px 0 8px; }
+@media (max-height: 700px) { .vid-player { position: static; } }

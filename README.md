@@ -10,6 +10,7 @@ Guía de estudio de **Comunicación de Datos 2026 (UTN-FRT, Ingeniería en Siste
 Contenido:
 
 - **Parciales y finales resueltos** (`#/parciales`): 17 exámenes reales (parciales 2023 a 2025 en sus distintos temas y seis finales de 2019), 73 ítems resueltos con su teoría, ranking de lo que más se repite y qué unidades pesan más. Cada afirmación de verdadero o falso queda además como pregunta en su lección, marcada “tomada en parcial”.
+- **Videos de resumen** (`#/videos`): un video corto por lección (`videos/<id>.mp4`), separados por parcial y de corrido, con enlace a cada lección; cada lección tiene también el suyo arriba. El test falla si una lección no tiene video.
 - **Teoría a fondo** para lo que toman los parciales y no estaba en las guías: qué espectro sale de cada señal (serie, transformada, sinc, 1/T y 1/p), teorema de codificación de fuente, códigos prefijo e información mutua, y detección contra corrección (distancia mínima, FEC, ARQ, repetición).
 - **Unidad 9** completa, desde el apunte de la cátedra, sus cinco lecturas (banda ancha, ADSL, redes ópticas, MODEM y redes PON), el TP 9 y su cuestionario: módem DTE/DCE y normas V (FSK a TCM, V.90/V.92), interfaz RS-232/V.24 y módem nulo, xDSL, ADSL, splitter, DSLAM, VDSL/VDSL2, DMT con bitswapping y Reed-Solomon, FTTx, PON y presupuesto óptico, y las tecnologías PON de APON a NG-PON2 con la capa física de GPON.
 - Preguntas de los cuestionarios del campus de las unidades 1 a 8.
