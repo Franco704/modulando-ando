@@ -881,3 +881,7 @@ span.neg { color: var(--err); font-weight: 600; } span.pos { color: var(--ok); f
 .lesson-video summary { cursor: pointer; font-weight: 700; color: var(--accent); }
 .lesson-video video { margin: 12px 0 8px; }
 @media (max-height: 700px) { .vid-player { position: static; } }
+
+/* Otras guías agrupadas por año de la carrera */
+.also-y { font-size: .95rem; font-weight: 700; margin: 18px 0 8px; opacity: .75; }
+.also-h + .also-y { margin-top: 4px; }

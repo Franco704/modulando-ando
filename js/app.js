@@ -17,13 +17,16 @@
   const cx = window.GUIDE.cx;
   const REPO = 'https://github.com/Franco704/modulando-ando';
   // Guías hermanas: página publicada y repositorio de cada una
+  // [nombre, materia, slug, año de la carrera]
   const SIBLINGS = [
-    ['Backeando Ando', 'Desarrollo de software backend (C#, ASP.NET, EF Core)', 'backeando-ando'],
-    ['Fronteando Ando', 'Desarrollo frontend (HTML, CSS, JavaScript, React)', 'fronteando-ando'],
-    ['Diseñando Ando', 'Diseño de Sistemas de Información (UML, GRASP, GoF)', 'disenando-ando'],
-    ['Iterando Ando', 'Matemática Superior (Laplace, métodos numéricos, Fourier)', 'iterando-ando'],
-    ['Economizar', 'Economía (micro y macro con gráficas)', 'economizar'],
-    ['Probando Ando', 'Probabilidad y Estadística (Bayes, distribuciones, intervalos, tests)', 'probando-ando'],
+    ['Integrando Ando', 'Análisis Matemático II (límites, derivadas, integrales múltiples, en 3D)', 'integrando-ando', 2],
+    ['Operando Ando', 'Sistemas Operativos (procesos, planificación, memoria, archivos)', 'operando-ando', 2],
+    ['Backeando Ando', 'Desarrollo de software backend (C#, ASP.NET, EF Core)', 'backeando-ando', 3],
+    ['Fronteando Ando', 'Desarrollo frontend (HTML, CSS, JavaScript, React)', 'fronteando-ando', 3],
+    ['Diseñando Ando', 'Diseño de Sistemas de Información (UML, GRASP, GoF)', 'disenando-ando', 3],
+    ['Iterando Ando', 'Matemática Superior (Laplace, métodos numéricos, Fourier)', 'iterando-ando', 3],
+    ['Probando Ando', 'Probabilidad y Estadística (Bayes, distribuciones, intervalos, tests)', 'probando-ando', 3],
+    ['Economizar', 'Economía (micro y macro con gráficas)', 'economizar', 3],
   ];
 
   // ---------- Almacenamiento (puede fallar en modo privado) ----------
@@ -233,7 +236,7 @@
             <a class="btn" href="${REPO}" target="_blank" rel="noopener">Ver el repositorio</a>
           </div>
           <h2 class="also-h" id="tambien">También probá:</h2>
-          <ul class="also">${SIBLINGS.map(([n, d, slug]) => `<li><a class="also-main" href="https://franco704.github.io/${slug}/" target="_blank" rel="noopener"><b>${n}</b><span>${d}</span></a><a class="also-repo" href="https://github.com/Franco704/${slug}" target="_blank" rel="noopener" aria-label="Repositorio de ${n}">repositorio</a></li>`).join('')}</ul>
+          ${[[2, '2.º año'], [3, '3.er año']].map(([a, t]) => `<h3 class="also-y">${t}</h3><ul class="also">${SIBLINGS.filter((s) => s[3] === a).map(([n, d, slug]) => `<li><a class="also-main" href="https://franco704.github.io/${slug}/" target="_blank" rel="noopener"><b>${n}</b><span>${d}</span></a><a class="also-repo" href="https://github.com/Franco704/${slug}" target="_blank" rel="noopener" aria-label="Repositorio de ${n}">repositorio</a></li>`).join('')}</ul>`).join('')}
         </section>
         <section class="home-how">
           <h2>Cómo estudiar con esta guía</h2>
