@@ -80,4 +80,35 @@
     el.addEventListener('input', run);
     run();
   };
+  // V o F por partes: cada afirmación se corta en partes y se juzga cada una; con una parte falsa, toda la frase es falsa
+  // cfg: { items: [{ parts: [[texto, verdadera?, por qué]] }] }
+  L.vfpartes = (el, cfg) => {
+    let k = 0;
+    const draw = () => {
+      const it = cfg.items[k], verdict = it.parts.every((p) => p[1]);
+      el.innerHTML = `<p class="drill-n">Afirmación ${k + 1} de ${cfg.items.length}</p>
+        <ol class="vfp">${it.parts.map(([t], i) => `<li data-i="${i}"><span class="vfp-t">${t}</span><span class="toggle vfp-b" role="group" aria-label="Parte ${i + 1}"><button type="button" data-v="1">V</button><button type="button" data-v="0">F</button></span><p class="vfp-why" hidden></p></li>`).join('')}</ol>
+        <div class="lab-row"><button class="btn sm primary" type="button" data-act="check">Comprobar</button><span class="lab-score" aria-live="polite"></span>
+        <span class="vfp-nav"><button class="btn sm" type="button" data-act="prev" ${k ? '' : 'disabled'}>Anterior</button><button class="btn sm" type="button" data-act="next" ${k < cfg.items.length - 1 ? '' : 'disabled'}>Siguiente</button></span></div>`;
+      el.querySelector('[data-act="check"]').addEventListener('click', () => {
+        let ok = 0;
+        el.querySelectorAll('.vfp li').forEach((li) => {
+          const [, v, why] = it.parts[+li.dataset.i], pick = li.querySelector('[aria-pressed="true"]');
+          const good = pick && (pick.dataset.v === '1') === v;
+          ok += !!good;
+          li.className = pick ? (good ? 'is-ok' : 'is-bad') : '';
+          const w = li.querySelector('.vfp-why'); w.hidden = false; w.innerHTML = `<b>${v ? 'Verdadera' : 'Falsa'}.</b> ${why}`;
+        });
+        el.querySelector('.lab-score').innerHTML = `<span class="chip ${ok === it.parts.length ? 'ok' : 'warn'}">${ok} de ${it.parts.length} partes</span> <span class="chip ${verdict ? 'ok' : 'err'}">La frase es ${verdict ? 'VERDADERA' : 'FALSA'}</span>`;
+      });
+    };
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      if (b.dataset.v) b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      if (b.dataset.act === 'next' && k < cfg.items.length - 1) { k++; draw(); }
+      if (b.dataset.act === 'prev' && k > 0) { k--; draw(); }
+    });
+    draw();
+  };
 })();

@@ -200,6 +200,41 @@
   MODS.psk16 = { n: 4, name: '16-PSK', map: Object.fromEntries(Array.from({ length: 16 }, (_, k) => [gray(k).toString(2).padStart(4, '0'), polar(1, 11.25 + k * 22.5)])) };
   const G2 = { '00': -3, '01': -1, '11': 1, '10': 3 };
   MODS.qam16 = { n: 4, name: '16-QAM', map: Object.fromEntries(Object.keys(G2).flatMap((a) => Object.keys(G2).map((c) => { const i = G2[a], q = G2[c]; return [a + c, { i: i / 3, q: q / 3, A: Math.hypot(i, q) / 3, ph: Math.atan2(q, i) / deg }]; }))) };
+  // Tablas de la cátedra que usan las resoluciones del 3er parcial (diapositivas de la Unidad 8):
+  // BPSK 0→0°, 1→180°; 4-PSK sobre los ejes; 8-PSK en orden binario cada 45°; 8-QAM: los dos primeros bits dan la fase y el último la amplitud
+  MODS.bpskC = { n: 1, name: 'BPSK (cátedra)', map: { 0: polar(1, 0), 1: polar(1, 180) } };
+  MODS.psk4 = { n: 2, name: '4-PSK sobre los ejes', map: { '00': polar(1, 0), '01': polar(1, 90), '10': polar(1, 180), '11': polar(1, 270) } };
+  MODS.psk8C = { n: 3, name: '8-PSK (cátedra)', map: Object.fromEntries(Array.from({ length: 8 }, (_, k) => [k.toString(2).padStart(3, '0'), polar(1, k * 45)])) };
+  MODS.qam8C = { n: 3, name: '8-QAM (cátedra)', map: Object.fromEntries(Array.from({ length: 8 }, (_, k) => [k.toString(2).padStart(3, '0'), polar(k & 1 ? 1 : 0.5, (k >> 1) * 90)])) };
+
+  // ---------- Tercer parcial ----------
+  // TDM síncrona: N canales de r bps, cada ranura lleva u bits (1 = bit, 8 = carácter) y la trama s bits de sincronismo
+  function tdm(n, r, u, s) {
+    const bits = n * u + s, Tf = u / r;
+    return { bits, Tf, fps: 1 / Tf, R: bits / Tf, data: n * r, sync: s / Tf };
+  }
+  // Punto (I, Q) → amplitud, fase de 0° a 360°, ángulo de referencia del primer cuadrante y cuadrante (0 si cae sobre un eje)
+  function point(i, q) {
+    const A = Math.hypot(i, q);
+    let th = Math.atan2(q, i) / deg;
+    if (th < 0) th += 360;
+    th = Math.round(th * 1e6) / 1e6 % 360;
+    const ref = i === 0 || q === 0 ? null : Math.atan(Math.abs(q) / Math.abs(i)) / deg;
+    const quad = ref == null ? 0 : i > 0 ? (q > 0 ? 1 : 4) : (q > 0 ? 2 : 3);
+    return { A, th, ref, quad };
+  }
+  // Tipo de modulación a partir de los puntos de una constelación
+  function classify(pts) {
+    const P = pts.map(([i, q]) => point(i, q));
+    const amps = [...new Set(P.map((p) => +p.A.toFixed(6)))];
+    const phases = [...new Set(P.filter((p) => p.A > 1e-9).map((p) => +p.th.toFixed(3)))];
+    const M = pts.length;
+    if (phases.length <= 1 || (amps.length === M && phases.length <= 2 && P.every((p) => p.A < 1e-9 || p.th % 180 === 0) && amps.includes(0))) return { kind: 'ASK', M, amps, phases };
+    if (amps.length === 1) return { kind: 'PSK', M, amps, phases };
+    return { kind: 'QAM', M, amps, phases };
+  }
+  const download = (bits, R) => bits / R;
+
   const groups = (bits, n) => (bits.match(new RegExp(`.{1,${n}}`, 'g')) || []).map((g) => g.padEnd(n, '0'));
 
   // Parser de respuestas numéricas: "1,5", "2e-4", "10^-5", "133 Mbps", "−80 dBm", "1.234,5"
@@ -262,6 +297,6 @@
     log2, dB, fromDb, dBm, fromDbm, K, C0, lambda, noiseW, noiseDbm, fspl,
     info, entropy, freqs, huffman, nyquist, shannon, levels, pow2Floor,
     ones, hdist, minDist, ascii7, bcd, crc, crcCheck, hammingLayout, hammingEncode, hammingDecode, parityCount,
-    lineCode, dmanchDecode, MODS, groups, parseNum, checkOpen,
+    lineCode, dmanchDecode, MODS, groups, parseNum, checkOpen, tdm, point, classify, download,
   };
 })();

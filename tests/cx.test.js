@@ -1,7 +1,7 @@
 // Autocomprobación de js/labs/cx.js contra los ejemplos de la guía de la cátedra y los TP. Uso: node tests/cx.test.js
 const assert = require('assert');
 global.window = { GUIDE: { h: { num: (v) => String(v) } } };
-require('../js/labs/cx.js');
+require('../laboratorios/calculos.js');
 const X = window.GUIDE.cx, near = (a, b, t = 1e-3) => assert(Math.abs(a - b) < t, `${a} ≠ ${b}`);
 // U3: dBm, espacio libre (ejemplo 9) y ruido (ejemplos 12 y 13, TP 3.2)
 near(X.dBm(63.1e-3), 18, 0.01); near(X.fspl(5800, 0.1), 87.71, 0.01); near(X.noiseDbm(17, 1), -174, 0.05); near(X.noiseDbm(25, 20e6), -100.85, 0.01);
@@ -23,6 +23,14 @@ const s = (k) => X.lineCode('10000000011100001', k).map(([a, b]) => `${a}${b}`).
 assert.strictEqual(s('b8zs'), '11,00,00,00,11,-1-1,00,-1-1,11,-1-1,11,-1-1,00,00,00,00,11');
 assert.strictEqual(s('hdb3'), '11,00,00,00,11,-1-1,00,00,-1-1,11,-1-1,11,00,00,00,11,-1-1');
 assert.strictEqual(X.dmanchDecode(X.lineCode('1011000110', 'dmanch')), '1011000110');
+// 3er parcial: TDM de los tres temas y de la otra versión del tema 3, constelaciones y descarga
+near(X.tdm(10, 10e3, 8, 1).R, 101250); near(X.tdm(10, 10e3, 1, 8).R, 180000); near(X.tdm(5, 20e3, 1, 8).R, 260000); near(X.tdm(4, 2e3, 8, 1).R, 8250);
+near(X.tdm(10, 10e3, 8, 1).Tf, 8e-4, 1e-9); near(X.tdm(10, 10e3, 1, 8).sync, 80000);
+const pt = X.point(-2, -2); near(pt.A, Math.SQRT2 * 2); near(pt.th, 225); assert.strictEqual(pt.quad, 3); near(X.point(0, -2).th, 270);
+assert.strictEqual(X.classify([[2, 2], [-2, 2], [-2, -2], [2, -2]]).kind, 'PSK'); assert.strictEqual(X.classify([[0, 0], [2, 0]]).kind, 'ASK');
+assert.strictEqual(X.classify([[2, 0], [-2, 0]]).kind, 'PSK'); assert.strictEqual(X.classify(Object.values(X.MODS.qam8C.map).map((p) => [p.i, p.q])).kind, 'QAM');
+assert.strictEqual(X.MODS.psk8C.map['101'].ph, 225); assert.strictEqual(X.MODS.qam8C.map['101'].A, 1); assert.strictEqual(X.MODS.qam8C.map['110'].ph, 270);
+near(X.download(2e6, 56e3), 35.714); near(X.download(2e6, 1e6), 2);
 // Corrector de abiertas
 assert(X.parseNum('133,16 Mbps') === 133.16e6 && X.parseNum('10^-4') === 1e-4 && X.parseNum('1.234,5') === 1234.5);
 assert(X.checkOpen({ t: 'num', a: 133.16, u: 'Mbps' }, '133,16 Mbps').ok && X.checkOpen({ t: 'num', a: 133.16, u: 'Mbps' }, '133160000').ok && !X.checkOpen({ t: 'num', a: 133.16, u: 'Mbps' }, '120').ok);

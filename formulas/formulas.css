@@ -1,0 +1,6 @@
+/* Hoja de fórmulas: una tarjeta por fórmula, del color del parcial. */
+.formulas-page h2 { display: flex; align-items: center; flex-wrap: wrap; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px; margin: 0 0 1.5em; }
+.card { padding: 12px 14px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--u, var(--accent)); font-family: var(--sans); font-size: .92rem; line-height: 1.5; }
+.card b { display: block; font-size: .86rem; color: var(--u, var(--accent-ink)); margin-bottom: 4px; }
+.card .f { font: 500 1rem var(--serif); overflow-wrap: anywhere; }

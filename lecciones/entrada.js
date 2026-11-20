@@ -15,6 +15,7 @@
     u7: ['Bits', 'Símbolos', 'R = r·log₂N', 'Código de línea', 'Banda base'],
     u8: ['Bits', 'n = log₂M', 'Fase + amplitud', 'Portadora', 'Multiplexar'],
     u9: ['DTE', 'Módem (DCE)', 'Splitter + par de cobre', 'DSLAM / OLT', 'Fibra · Internet'],
+    u10: ['Terminal', 'Antena', 'Aire (2,4 / 5 GHz)', 'Punto de acceso', 'Red cableada'],
   };
 
   // trap = la confusión típica del tema
@@ -28,6 +29,7 @@
     u7: 'Bits por segundo y baudios coinciden solo con <b>2 niveles</b>: R = r·log₂N. Manchester tiene transición en la <b>mitad</b> de cada bit; el diferencial mira el <b>comienzo</b>.',
     u8: 'Baudios = bps / <b>log₂M</b>. QPSK y 4-ASK tienen la misma tasa de símbolos; en QAM, M ≤ fases × amplitudes. Nyquist del muestreo: <b>fs ≥ 2·f<sub>máx</sub></b>.',
     u9: 'ADSL multiplexa voz y datos en <b>frecuencia</b> (el splitter los separa); el <b>DSLAM</b> está en la central. En DMT lo espaciado en forma constante son las <b>frecuencias</b> y en cada una se mide la <b>SNR</b>. En GPON la bajada es <b>broadcast</b> y la subida <b>TDMA</b>; el splitter óptico es <b>pasivo</b>.',
+    u10: 'WiFi es una <b>WLAN</b> (IEEE 802.11), no una WPAN: las de área personal son Bluetooth y ZigBee (802.15). Y las bandas de 2,4 y 5 GHz son de <b>uso compartido</b>, con límites de potencia.',
   };
 
   // Un SVG de 150×120 por tema. Sin animación (reduced-motion) cada uno queda en un estado final legible.

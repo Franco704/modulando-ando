@@ -1,0 +1,105 @@
+/* Lección: título, teoría, ejercicios con su desarrollo paso a paso, bibliografía y navegación. */
+.lesson { max-width: 46rem; margin: 0 auto; }
+.crumb { font: 500 .88rem/1.5 var(--sans); color: var(--muted); margin: 0 0 10px; overflow-wrap: anywhere; }
+.crumb a { color: inherit; }
+.lesson h1, .home h1 { font-family: var(--display); font-weight: 750; font-size: clamp(2rem, 1.4rem + 2.4vw, 2.9rem); line-height: 1.08; letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance; font-variation-settings: 'opsz' 96; }
+.lesson h2 { font-family: var(--display); font-weight: 700; font-size: 1.65rem; line-height: 1.2; letter-spacing: -.02em; margin: 2.4em 0 .6em; text-wrap: balance; }
+.lesson h3 { font-family: var(--display); font-weight: 700; font-size: 1.16rem; line-height: 1.35; margin: 1.9em 0 .5em; letter-spacing: -.01em; }
+.lesson h4 { font-family: var(--display); font-weight: 650; font-size: 1rem; margin: 1.5em 0 .4em; }
+.lesson p, .lesson li { max-width: 68ch; }
+.lesson p { margin: 0 0 1em; }
+.lesson ul, .lesson ol { padding-left: 1.3em; margin: 0 0 1.1em; }
+.lesson li { margin: .3em 0; }
+.lesson li::marker { color: var(--muted); }
+.tldr { font-size: 1.18rem; line-height: 1.62; color: var(--ink-2); margin: 0 0 24px; }
+.goals { font-family: var(--sans); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 14px 0 6px; margin: 0 0 8px; }
+.goals p { font-weight: 700; font-size: .95rem; margin: 0 0 6px; }
+.goals ul { margin: 0 0 8px; padding-left: 1.2em; font-size: .97rem; line-height: 1.55; }
+.body > :first-child { margin-top: 1.6em; }
+.unit-tag { display: inline-block; font: 700 .76rem/1 var(--sans); padding: 5px 10px; border-radius: 99px; background: var(--u, var(--accent)); color: var(--on-accent); margin-right: 10px; vertical-align: .2em; }
+.unit-tag.sm { font-size: .7rem; padding: 3px 8px; margin-right: 4px; vertical-align: .1em; background: var(--accent); }
+.mod-n { display: inline-block; margin-right: .7em; font: 700 .78rem var(--sans); color: var(--u, var(--accent-ink)); }
+.lesson-video { margin: 0 0 32px; font-family: var(--sans); }
+.lesson-video summary { cursor: pointer; font-weight: 700; color: var(--accent-ink); width: fit-content; }
+.lesson-video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); margin: 12px 0 8px; }
+.sec-lede { font: 400 .97rem var(--sans); color: var(--muted); }
+
+/* ---------- Ejercicios ---------- */
+.exercise { margin: 0 0 20px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.exercise.official { border-left: 4px solid var(--accent); }
+.exercise.parcial { border-left: 4px solid var(--c-x); }
+.ex-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font: 700 .82rem var(--sans); }
+.ex-tag { color: var(--accent-ink); }
+.ex-tag.px { color: var(--c-x); }
+.ex-level { color: var(--muted); padding: 2px 8px; border: 1px solid var(--line); border-radius: 99px; font-weight: 500; }
+.ex-exams { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+.ex-exams .chip { font-weight: 500; }
+.exercise h3 { margin: 8px 0 10px !important; }
+.ex-prompt { font-size: 1rem; }
+.ex-prompt > :last-child { margin-bottom: 0; }
+details.hint, details.solution { margin-top: 14px; font-family: var(--sans); }
+details.hint > summary, details.solution > summary { cursor: pointer; font-weight: 700; font-size: .93rem; color: var(--accent-ink); width: fit-content; padding: 4px 0; }
+details.solution[open] > summary { margin-bottom: 4px; }
+details.hint ul { margin: 8px 0 0; font-size: .95rem; }
+.sol-body { margin-top: 10px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.sol-explain { font-family: var(--serif); }
+.sol-explain table { font-size: .88rem; }
+.vf { font-weight: 700; } .vf.v { color: var(--ok); } .vf.f { color: var(--err); }
+
+/* ---------- Desarrollo paso a paso (dev en guia.js) ---------- */
+.dev { font-family: var(--serif); }
+.dev-k { font: 700 .86rem var(--sans) !important; color: var(--accent-ink); margin: 0 0 4px !important; }
+.dev-dp { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 0 0 14px; }
+.dev-dp > div { padding: 10px 14px; border-radius: 10px; background: var(--surface-2); }
+.dev-dp ul { margin: 0 !important; padding-left: 1.1em !important; font: 400 .93rem/1.5 var(--sans); }
+.dev-antes { font-size: .98rem; color: var(--ink-2); }
+.dev-h { font-family: var(--display) !important; font-size: 1.05rem !important; margin: 1.6em 0 .6em !important; color: var(--ink); }
+.dev-steps { list-style: none; padding: 0 !important; margin: 0 0 1em !important; position: relative; }
+.dev-steps > li { position: relative; padding: 0 0 12px 40px; margin: 0; max-width: none; }
+.dev-steps > li::before { content: counter(list-item); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: var(--on-accent); font: 700 .78rem var(--sans); }
+.dev-steps > li:not(:last-child)::after { content: ''; position: absolute; left: 12.5px; top: 30px; bottom: 2px; width: 1px; background: var(--line); }
+.dev-st { font: 700 .95rem var(--sans) !important; margin: 2px 0 4px !important; }
+.dev-steps > li > p:not(.dev-st) { margin: 0 0 .5em; }
+.dev-steps .table-wrap, .dev-steps .fig { margin: .6em 0; }
+/* Lo que se escribe en el parcial: sobre hoja cuadriculada */
+.dev-final {
+  margin: 1.2em 0; padding: 14px 18px; border-radius: 10px; border: 1px solid var(--line); border-left: 4px solid var(--ok);
+  background-color: var(--surface);
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 18px 18px; background-position: -1px -1px;
+}
+.dev-final .dev-k { color: var(--ok); }
+.dev-final p { margin: 0; font: 500 1rem/1.7 var(--serif); background: color-mix(in srgb, var(--surface) 82%, transparent); }
+.dev .note { margin: 0 0 .8em; }
+
+/* Constelaciones de la cátedra lado a lado */
+.ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 1em 0 1.6em; }
+.ct { margin: 0; padding: 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.ct figcaption { font: 500 .82rem/1.4 var(--sans); color: var(--ink-2); margin-top: 6px; text-align: center; }
+
+/* ---------- Bibliografía y cierre ---------- */
+.source { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin-bottom: 10px; font-family: var(--sans); }
+.source > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; font-weight: 600; font-size: .95rem; }
+.source > summary::-webkit-details-marker { display: none; }
+.source .host { color: var(--muted); font-weight: 400; font-size: .84rem; text-align: right; }
+.source-body { padding: 0 16px 12px; font-size: .94rem; line-height: 1.55; }
+.source-body ul { padding-left: 1.2em; }
+.done-row { margin: 56px 0 18px; display: flex; gap: 12px; align-items: center; }
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--sans); }
+.pager a { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--ink); }
+.pager a:hover { border-color: var(--accent); }
+.pager small { color: var(--muted); font-size: .8rem; }
+.pager strong { font-weight: 650; font-size: .97rem; line-height: 1.35; }
+.pager .next { text-align: right; grid-column: 2; }
+.q-link { font: 400 .88rem var(--sans); }
+
+@media (max-width: 720px) {
+  body { font-size: 1.02rem; }
+  .lesson h2 { font-size: 1.42rem; }
+  .tldr { font-size: 1.08rem; }
+  .pager { grid-template-columns: 1fr; }
+  .pager .next { grid-column: 1; }
+  .exercise { padding: 16px 14px; }
+  .dev-steps > li { padding-left: 34px; }
+  th, td { padding: 8px 10px; }
+}

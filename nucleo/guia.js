@@ -103,6 +103,20 @@
     for (const t of s.texts || []) g += `<text x="${X(t.x)}" y="${Y(t.y)}" class="pl-lbl ${t.cls || ''}" text-anchor="${t.anchor || 'middle'}">${t.t}</text>`;
     return `<svg class="plot" viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="${esc(s.alt || 'Gráfico')}">${g}</svg>`;
   }
+  /* Desarrollo paso a paso de un ejercicio, como en la resolución detallada de la cátedra:
+     dev({ datos: [], piden: [], antes?, partes: [{ h?, pasos: [['Título', html]] }], parcial?, ojo?: [] })
+     Los pasos se numeran de corrido entre partes; "parcial" es lo que alcanza con escribir en el examen. */
+  function dev(o) {
+    let n = 0;
+    const li = (xs) => `<ul>${xs.map((x) => `<li>${x}</li>`).join('')}</ul>`;
+    return `<div class="dev">
+      ${o.datos ? `<div class="dev-dp"><div><p class="dev-k">Datos</p>${li(o.datos)}</div><div><p class="dev-k">Qué piden</p>${li(o.piden || [])}</div></div>` : ''}
+      ${o.antes ? `<p class="dev-antes"><b>Antes de empezar.</b> ${o.antes}</p>` : ''}
+      ${(o.partes || []).map((p) => `${p.h ? `<h4 class="dev-h">${p.h}</h4>` : ''}${p.html || ''}${p.pasos ? `<ol class="dev-steps" start="${n + 1}">${p.pasos.map(([t, x]) => { n++; return `<li><p class="dev-st">${t}</p>${x.trim().startsWith('<') ? x : `<p>${x}</p>`}</li>`; }).join('')}</ol>` : ''}`).join('')}
+      ${o.parcial ? `<div class="dev-final"><p class="dev-k">Cómo queda escrito en el parcial</p>${o.parcial.trim().startsWith('<') ? o.parcial : `<p>${o.parcial}</p>`}</div>` : ''}
+      ${(o.ojo || []).map((x) => note(`<p><b>Ojo.</b> ${x}</p>`, 'warn')).join('')}
+    </div>`;
+  }
   // Gráfico con epígrafe, listo para el cuerpo de una lección
   const chart = (spec, caption) => fig(plot(spec), caption);
 
@@ -111,7 +125,7 @@
     { id: 'p1', title: 'Primer parcial', name: 'Sistemas, señales y ruido' },
     { id: 'p2', title: 'Segundo parcial', name: 'Información, canales y errores' },
     { id: 'p3', title: 'Tercer parcial', name: 'Transmisión y modulación' },
-    { id: 'final', title: 'Final', name: 'Toda la materia + Unidad 10', all: true },
+    { id: 'final', title: 'Final', name: 'Toda la materia y la Unidad 10', all: true },
   ];
 
   // stop = nombre corto para el recorrido de la portada; tema = unidad del programa 2026; tp = trabajo práctico.
@@ -126,9 +140,9 @@
     { id: 'u7', unit: 'p3', tema: '7', tp: 7, title: 'Técnicas de transmisión de la información', stop: 'NRZ', blurb: 'bits y baudios, serie y paralelo, sincrónica y asincrónica, códigos de línea' },
     { id: 'u8', unit: 'p3', tema: '8', tp: 8, title: 'Modulación y multiplexación', stop: 'QAM', blurb: 'ASK, FSK, PSK, QAM, constelaciones, PCM, FDM, TDM y jerarquías E1, PDH y SDH' },
     { id: 'u9', unit: 'p3', tema: '9', tp: 9, title: 'Equipos de comunicación de datos (DCE)', stop: 'DCE', blurb: 'módem y normas V, RS-232, xDSL, ADSL y DMT, DSLAM, VDSL, FTTx y redes ópticas pasivas (APON a NG-PON2)' },
-    { id: 'u10', unit: 'final', tema: '10', tp: 10, title: 'Unidad 10', stop: 'U10', blurb: 'contenido pendiente de carga (entra solo en el final)' },
+    { id: 'u10', unit: 'final', tema: '10', tp: 10, title: 'Redes inalámbricas', stop: 'WiFi', blurb: 'WPAN, WLAN, WMAN y WWAN, WiFi (IEEE 802.11), sus componentes, espectro ensanchado, OFDM y MIMO (entra solo en el final)' },
   ];
 
   // EXAMS: parciales y finales reales (parciales.js)
-  window.GUIDE = { UNITS, MODULES, LESSONS: [], LABS: {}, EXAMS: [], h: { esc, table, note, lab, flow, def, fig, frac, eq, num, plot, chart } };
+  window.GUIDE = { UNITS, MODULES, LESSONS: [], LABS: {}, EXAMS: [], h: { esc, table, note, lab, flow, def, fig, frac, eq, num, plot, chart, dev } };
 })();

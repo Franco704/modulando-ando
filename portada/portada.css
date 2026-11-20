@@ -1,0 +1,100 @@
+/* Portada: el instrumento de bits a señal, el recorrido del transmisor al receptor, los simulacros y las unidades. */
+.home { max-width: 66rem; margin: 0 auto; }
+.hero { padding: 4px 0 24px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; align-items: center; margin-bottom: 36px; }
+.hero-kicker { font: 600 .9rem var(--sans); color: var(--muted); margin: 0 0 14px; }
+.home h1 { font-size: clamp(2.3rem, 1.4rem + 3.4vw, 3.8rem); max-width: 14ch; line-height: 1.04; letter-spacing: -.022em; }
+.lede { font-size: 1.16rem; line-height: 1.6; color: var(--ink-2); max-width: 54ch; margin: 0 0 26px; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.weak { font: 400 .97rem var(--sans); color: var(--ink-2); margin: 18px 0 0; padding: 12px 16px; border-radius: var(--radius); background: var(--warn-soft); max-width: 60ch; }
+
+/* El instrumento: bits como interruptores, modo como selector, la señal en el vidrio */
+.hero-inst { padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); font-family: var(--sans); min-width: 0; }
+.hi-bits { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin-bottom: 10px; }
+.hi-bits button { font: 700 1.1rem var(--mono); height: 40px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--muted); cursor: pointer; transition: background .15s, color .15s; }
+.hi-bits button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.hi-mode { display: flex; width: 100%; }
+.hi-mode button { flex: 1 1 auto; padding: 6px 8px; }
+.hero-inst .scope { padding: 10px 8px 6px; }
+.hero-inst .wave, .hero-inst .swave { min-width: 0; width: 100%; }
+.hi-read { margin: 10px 2px 0; font: 400 .9rem/1.5 var(--sans); color: var(--ink-2); min-height: 3em; }
+
+/* El recorrido: un paquete que atraviesa las unidades y se detiene en la actual */
+.route { --cols: 12; --stop: 1; position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols), 1fr); align-items: start; font-family: var(--sans); }
+.route::before { content: ''; position: absolute; left: calc(100% / var(--cols) / 2); right: calc(100% / var(--cols) / 2); top: 17px; height: 2px; background: var(--line); }
+.route::after { content: ''; position: absolute; top: 12px; width: 12px; height: 12px; margin-left: -6px; border-radius: 3px; background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); left: calc(100% / var(--cols) / 2); transition: left 2.2s cubic-bezier(.45, .05, .25, 1) .3s; }
+.route.go::after { left: calc((var(--stop) + .5) * 100% / var(--cols)); }
+.route li { position: relative; display: flex; justify-content: center; margin: 0; }
+.route .end .verb { display: inline-grid; place-items: center; height: 36px; padding: 0 8px; font: 700 .8rem var(--sans); color: var(--muted); background: var(--bg); position: relative; z-index: 1; }
+.route .end.ok .verb { color: var(--ok); }
+.stop a, .stop .stop-link { display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-2); padding: 6px 2px; border-radius: 8px; }
+.stop a:hover .stop-name { color: var(--accent-ink); }
+.stop-dot { width: 24px; height: 24px; border-radius: 50%; position: relative; background: var(--bg); background-image: conic-gradient(var(--accent) calc(var(--p) * 360deg), var(--line) 0); }
+.stop-dot::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--bg); }
+.stop.done .stop-dot::after { background: var(--accent); inset: 5px; }
+.stop.current .stop-name { color: var(--ink); font-weight: 700; }
+.stop.pending .stop-link { color: var(--muted); }
+.stop.pending .stop-dot { opacity: .6; }
+.stop-name { font-size: .84rem; font-weight: 500; text-align: center; line-height: 1.2; }
+
+/* Simulacros por parcial */
+.exam-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 10px; margin-top: 32px; }
+.exam-card { display: grid; gap: 4px; align-content: start; padding: 16px 18px; border-radius: 14px; text-decoration: none; color: var(--ink); font-family: var(--sans); background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--u); transition: border-color .15s; }
+.exam-card:hover { border-color: var(--u); }
+.ec-k { font: 700 .82rem var(--sans); color: var(--u); }
+.ec-t { font: 700 1.1rem/1.3 var(--display); letter-spacing: -.01em; }
+.ec-m { font-size: .86rem; color: var(--muted); }
+
+/* Unidades por parcial */
+.home-unit { margin-top: 44px; }
+.home-unit h2, .home-how h2 { font: 750 1.4rem/1.3 var(--display); margin: 0 0 12px; letter-spacing: -.02em; display: flex; align-items: center; flex-wrap: wrap; }
+.unit-note { margin: 0 0 12px; color: var(--ink-2); }
+.mod-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+.mod-list li { border-bottom: 1px solid var(--line); }
+.mod-list a { display: grid; grid-template-columns: minmax(0, 1fr) 160px; grid-template-areas: "t meter" "b meta"; gap: 2px 24px; align-items: center; padding: 14px 8px; text-decoration: none; color: var(--ink); font-family: var(--sans); border-radius: 8px; }
+.mod-list a:hover { background: var(--surface); }
+.mod-title { grid-area: t; font-weight: 650; font-size: 1.04rem; }
+.mod-blurb { grid-area: b; color: var(--muted); font-size: .9rem; }
+.mod-meter { grid-area: meter; height: 5px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.mod-meter span { display: block; height: 100%; background: var(--u, var(--accent)); }
+.mod-meta { grid-area: meta; font-size: .8rem; color: var(--muted); }
+.mod-pending > div { display: grid; gap: 4px; padding: 14px 8px; opacity: .72; font-family: var(--sans); }
+.home-how { margin-top: 48px; font-family: var(--sans); }
+.home-how ol { padding-left: 1.2em; line-height: 1.6; max-width: 62ch; }
+.home-how li { margin: 6px 0; }
+.kbd-line { color: var(--muted); font-size: .9rem; }
+
+/* Repositorio y guías hermanas */
+.home-links { margin-top: 44px; }
+.repo-card { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 18px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); font-family: var(--sans); }
+.repo-card > svg { color: var(--ink); flex: none; }
+.repo-card > div { flex: 1 1 240px; min-width: 0; }
+.repo-card h2 { font: 700 1.1rem/1.3 var(--display); margin: 0 0 4px; }
+.repo-card p { margin: 0; color: var(--ink-2); font-size: .94rem; }
+.also-h { font: 750 1.4rem/1.3 var(--display); margin: 32px 0 12px; }
+.also-y { font: 700 .95rem var(--sans); margin: 18px 0 8px; color: var(--muted); }
+.also { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 10px; }
+.also li { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.also li:hover { border-color: var(--accent); }
+.also-main { display: grid; gap: 4px; padding: 14px 16px 10px; text-decoration: none; color: var(--ink); font-family: var(--sans); flex: 1; }
+.also-main b { font-size: 1rem; }
+.also-main span { font-size: .86rem; color: var(--muted); }
+.also-repo { padding: 7px 16px 10px; font: 600 .82rem var(--sans); color: var(--accent-ink); text-decoration: none; border-top: 1px dashed var(--line); }
+.also-repo:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
+@media (max-width: 720px) {
+  .mod-list a { grid-template-columns: 1fr; grid-template-areas: "t" "b" "meter" "meta"; gap: 4px; }
+  .hi-mode button { padding: 6px; font-size: .8rem; }
+  /* El recorrido se vuelve vertical */
+  .route { grid-template-columns: 1fr; grid-template-rows: repeat(var(--cols), 44px); }
+  .route::before { left: 17px; right: auto; width: 2px; height: auto; top: 22px; bottom: 22px; }
+  .route::after { left: 12px; margin-left: 0; top: 16px; transition: top 2.2s cubic-bezier(.45, .05, .25, 1) .3s; }
+  .route.go::after { left: 12px; top: calc(var(--stop) * 44px + 16px); }
+  .route li { justify-content: flex-start; }
+  .stop a, .stop .stop-link { flex-direction: row; gap: 14px; padding: 0 0 0 6px; }
+  .stop-name { font-size: .95rem; text-align: left; }
+  .route .end .verb { height: 44px; width: 36px; padding: 0; }
+}

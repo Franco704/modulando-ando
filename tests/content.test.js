@@ -3,14 +3,16 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 global.window = {};
-const files = ['content/_helpers', 'labs/core', 'labs/cx', 'labs/coms', ...fs.readdirSync(path.join(__dirname, '../js/content')).filter((f) => /^\d\d-.*\.js$/.test(f)).sort().map((f) => `content/${f.slice(0, -3)}`), 'content/formulas', 'content/parciales'];
-files.forEach((f) => fs.existsSync(path.join(__dirname, `../js/${f}.js`)) && require(`../js/${f}.js`));
+// Mismo orden que index.html, hasta el contenido (las vistas necesitan el navegador)
+const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+const files = [...html.matchAll(/<script src="([^"]+)">/g)].map((m) => m[1]);
+files.slice(0, files.indexOf('lecciones/entrada.js')).forEach((f) => require(path.join(__dirname, '..', f)));
 const { LESSONS, MODULES, LABS, FORMULAS = [], EXAMS, cx } = window.GUIDE;
 const ids = new Set();
 for (const l of LESSONS) {
   assert(!ids.has(l.id), `id repetido ${l.id}`); ids.add(l.id);
   assert(MODULES.some((m) => m.id === l.module), `módulo inexistente en ${l.id}`);
-  assert(fs.existsSync(path.join(__dirname, `../videos/${l.id}.mp4`)), `falta el video videos/${l.id}.mp4`);
+  assert(l.video === false || fs.existsSync(path.join(__dirname, `../videos/${l.id}.mp4`)), `falta el video videos/${l.id}.mp4 (o video: false)`);
   for (const c of l.labs || []) assert(LABS[c.type], `lab ${c.type} en ${l.id}`);
   for (const q of l.quiz || []) assert(q.a >= 0 && q.a < q.o.length, `respuesta fuera de rango en ${l.id}: ${q.q}`);
   for (const q of l.open || []) {

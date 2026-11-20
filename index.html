@@ -7,10 +7,20 @@
   <meta name="description" content="Guía de estudio de Comunicación de Datos (UTN-FRT): teoría, laboratorios interactivos, preguntas abiertas corregidas al instante, los TP y los parciales y finales de la cátedra resueltos, separada por parcial y final." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/anim.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M1 8Q3 1 5 8T9 8T13 8T15 8%22 fill=%22none%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke=%22%231f5fc4%22/%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="nucleo/estilos/tokens.css" />
+  <link rel="stylesheet" href="nucleo/estilos/base.css" />
+  <link rel="stylesheet" href="nucleo/estilos/marco.css" />
+  <link rel="stylesheet" href="lecciones/lecciones.css" />
+  <link rel="stylesheet" href="lecciones/entrada.css" />
+  <link rel="stylesheet" href="laboratorios/laboratorios.css" />
+  <link rel="stylesheet" href="practica/practica.css" />
+  <link rel="stylesheet" href="parciales/parciales.css" />
+  <link rel="stylesheet" href="portada/portada.css" />
+  <link rel="stylesheet" href="formulas/formulas.css" />
+  <link rel="stylesheet" href="graficas/graficas.css" />
+  <link rel="stylesheet" href="videos/videos.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M1 8Q3 1 5 8T9 8T13 8T15 8%22 fill=%22none%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke=%22%232357c6%22/%3E%3C/svg%3E" />
   <script>
     // Aplicar el tema guardado antes de pintar, para evitar parpadeo
     try { const t = localStorage.getItem('ma-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
@@ -23,7 +33,7 @@
     <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false" aria-controls="sidebar">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
     </button>
-    <a class="brand" href="#/"><span class="brand-dot" aria-hidden="true"></span>Modulando Ando</a>
+    <a class="brand" href="#/"><svg viewBox="0 0 32 20" width="30" height="19" aria-hidden="true"><path d="M2 10h5V3h6v14h6V3h6v7h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" opacity=".35"/><path d="M2 10c2.2-9 4.4-9 6.6 0s4.4 9 6.6 0 4.4-9 6.6 0 4.4 9 6.6 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Modulando Ando</a>
     <nav class="top-links" aria-label="Práctica">
       <a href="#/parciales">Parciales</a>
       <a href="#/videos">Videos</a>
@@ -56,22 +66,51 @@
     <aside class="rail" id="rail" aria-label="En esta página"></aside>
   </div>
 
-  <script src="js/content/_helpers.js"></script>
-  <script src="js/labs/core.js"></script>
-  <script src="js/labs/cx.js"></script>
-  <script src="js/labs/coms.js"></script>
-  <script src="js/content/01-sistemas.js"></script>
-  <script src="js/content/02-senales.js"></script>
-  <script src="js/content/03-ruido.js"></script>
-  <script src="js/content/04-informacion.js"></script>
-  <script src="js/content/05-canales.js"></script>
-  <script src="js/content/06-errores.js"></script>
-  <script src="js/content/07-transmision.js"></script>
-  <script src="js/content/08-modulacion.js"></script>
-  <script src="js/content/09-acceso.js"></script>
-  <script src="js/content/formulas.js"></script>
-  <script src="js/content/parciales.js"></script>
-  <script src="js/anim.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Núcleo y cálculos -->
+  <script src="nucleo/guia.js"></script>
+  <script src="laboratorios/calculos.js"></script>
+  <!-- Laboratorios, por tema -->
+  <script src="laboratorios/genericos.js"></script>
+  <script src="laboratorios/controles.js"></script>
+  <script src="laboratorios/redes.js"></script>
+  <script src="laboratorios/senales.js"></script>
+  <script src="laboratorios/ruido.js"></script>
+  <script src="laboratorios/informacion.js"></script>
+  <script src="laboratorios/errores.js"></script>
+  <script src="laboratorios/codigos-linea.js"></script>
+  <script src="laboratorios/modulacion.js"></script>
+  <script src="laboratorios/constelaciones.js"></script>
+  <script src="laboratorios/multiplexacion.js"></script>
+  <!-- Contenido de cada unidad -->
+  <script src="unidades/u01-sistemas.js"></script>
+  <script src="unidades/u02-senales.js"></script>
+  <script src="unidades/u03-ruido.js"></script>
+  <script src="unidades/u04-informacion.js"></script>
+  <script src="unidades/u05-canales.js"></script>
+  <script src="unidades/u06-errores.js"></script>
+  <script src="unidades/u07-transmision.js"></script>
+  <script src="unidades/u08-modulacion.js"></script>
+  <script src="unidades/u08b-tercer-parcial.js"></script>
+  <script src="unidades/u09-acceso.js"></script>
+  <script src="unidades/u10-inalambricas.js"></script>
+  <script src="formulas/formulas.js"></script>
+  <script src="parciales/examenes.js"></script>
+  <script src="parciales/tercer-parcial.js"></script>
+  <!-- Vistas -->
+  <script src="lecciones/entrada.js"></script>
+  <script src="nucleo/app.js"></script>
+  <script src="laboratorios/motor.js"></script>
+  <script src="lecciones/indice.js"></script>
+  <script src="lecciones/leccion.js"></script>
+  <script src="practica/cuestionario.js"></script>
+  <script src="practica/abiertas.js"></script>
+  <script src="practica/repaso.js"></script>
+  <script src="practica/simulacro.js"></script>
+  <script src="parciales/vista.js"></script>
+  <script src="formulas/vista.js"></script>
+  <script src="graficas/graficas.js"></script>
+  <script src="videos/videos.js"></script>
+  <script src="portada/portada.js"></script>
+  <script src="nucleo/arranque.js"></script>
 </body>
 </html>

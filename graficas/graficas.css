@@ -1,0 +1,5 @@
+/* Taller de gráficas: todos los laboratorios gráficos, agrupados por parcial. */
+.graph-unit h2 { display: flex; align-items: center; flex-wrap: wrap; }
+.graph-item { margin: 0 0 8px; }
+.graph-from { font: 600 .86rem var(--sans); color: var(--muted); margin: 28px 0 -14px !important; }
+.graph-unit[data-u] .lab-kind { color: var(--u); }
